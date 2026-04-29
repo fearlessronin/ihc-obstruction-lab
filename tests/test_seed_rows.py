@@ -1,5 +1,6 @@
 from ihc_lab.datasets import dataset_summary, load_seed_rows
 from ihc_lab.enums import ChannelLabel
+from ihc_lab.reports import cup_product_validation_report
 
 
 def test_loading_seed_rows_succeeds() -> None:
@@ -36,3 +37,12 @@ def test_coble_seed_shadow_is_order_two_z4_shadow() -> None:
 
     assert coble.shadow_selector is not None
     assert coble.shadow_selector.validate_z4_order_two_shadow()
+
+
+def test_cup_product_validation_report_mentions_seed_candidates() -> None:
+    records = load_seed_rows()
+    report = cup_product_validation_report(records)
+
+    assert "diaz_level_two" in report
+    assert "level_three_coble_diaz_candidate" in report
+    assert "Candidate rows checked: 2" in report
