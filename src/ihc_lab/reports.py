@@ -13,6 +13,7 @@ from ihc_lab.association_rules import (
 from ihc_lab.channels import ObstructionChannel
 from ihc_lab.enums import ChannelLabel
 from ihc_lab.features import extract_feature_matrix
+from ihc_lab.ranking import CandidateScore
 from ihc_lab.rule_classifier import classify_records
 
 
@@ -245,6 +246,59 @@ def association_rules_markdown(records: list[ObstructionChannel]) -> str:
     return "\n".join(lines)
 
 
+def _score_by_id(scores: list[CandidateScore]) -> dict[str, CandidateScore]:
+    return {score.record_id: score for score in scores}
+
+
+def _candidate_target(record: ObstructionChannel) -> str:
+    if record.cup_product_candidate is not None:
+        return record.cup_product_candidate.bockstein_target_string()
+    return "local/shadow candidate"
+
+
+def _candidate_target_latex(record: ObstructionChannel) -> str:
+    if record.cup_product_candidate is not None:
+        candidate = record.cup_product_candidate
+        return _latex_target_string(
+            candidate.expected_bockstein_degree(), candidate.target_codimension
+        )
+    return latex_escape_text("local/shadow candidate")
+
+
+def candidate_generation_markdown(
+    candidates: list[ObstructionChannel], scores: list[CandidateScore]
+) -> str:
+    score_lookup = _score_by_id(scores)
+    lines = [
+        "# Candidate Generation Report",
+        "",
+        "Warning: scores are research-priority scores, not truth probabilities.",
+        "",
+        "| id | channels | target | valid | bottleneck | score | explanation |",
+        "| --- | --- | --- | --- | --- | ---: | --- |",
+    ]
+    for candidate in candidates:
+        score = score_lookup[candidate.id]
+        channels = ", ".join(label.value for label in candidate.channel_labels)
+        valid = (
+            "yes"
+            if candidate.cup_product_candidate is not None
+            and candidate.cup_product_candidate.is_degree_twist_valid()
+            else "not_applicable"
+        )
+        lines.append(
+            "| "
+            f"{candidate.id} | "
+            f"{channels} | "
+            f"{_candidate_target(candidate)} | "
+            f"{valid} | "
+            f"{candidate.bottleneck.value} | "
+            f"{score.score:.3f} | "
+            f"{score.explanation} |"
+        )
+    return "\n".join(lines)
+
+
 def latex_escape_text(s: str) -> str:
     if "$" in s or "\\" in s:
         return s
@@ -453,5 +507,71 @@ def feature_summary_latex(records: list[ObstructionChannel]) -> str:
     ]
     for metric, value in metrics.items():
         lines.append(f"{latex_escape_text(metric)} & {value} \\\\")
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def candidate_generation_latex(
+    candidates: list[ObstructionChannel], scores: list[CandidateScore]
+) -> str:
+    score_lookup = _score_by_id(scores)
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Generated candidate research-priority ranking.}",
+        r"\label{tab:candidate-generation}",
+        r"\footnotesize",
+        r"\begin{tabular}{|p{0.25\textwidth}|p{0.21\textwidth}|p{0.16\textwidth}|p{0.20\textwidth}|p{0.08\textwidth}|}",
+        r"\hline",
+        r"Candidate & Channel & Target & Bottleneck & Score \\",
+        r"\hline",
+    ]
+    for candidate in candidates:
+        channels = ", ".join(label.value for label in candidate.channel_labels)
+        score = score_lookup[candidate.id]
+        lines.append(
+            f"{soft_break_identifier(candidate.id)} & "
+            f"{soft_break_identifier(channels)} & "
+            f"{_candidate_target_latex(candidate)} & "
+            f"{soft_break_identifier(candidate.bottleneck.value)} & "
+            f"{score.score:.3f} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def coble_diaz_hierarchy_latex(candidates: list[ObstructionChannel]) -> str:
+    cup_candidates = [
+        candidate for candidate in candidates if candidate.cup_product_candidate is not None
+    ]
+    cup_candidates = sorted(
+        cup_candidates,
+        key=lambda candidate: candidate.cup_product_candidate.target_codimension
+        if candidate.cup_product_candidate is not None
+        else 0,
+    )
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Coble-Diaz level hierarchy of formal Bockstein targets.}",
+        r"\label{tab:coble-diaz-hierarchy}",
+        r"\footnotesize",
+        r"\begin{tabular}{|p{0.12\textwidth}|p{0.22\textwidth}|p{0.18\textwidth}|p{0.20\textwidth}|p{0.18\textwidth}|}",
+        r"\hline",
+        r"Level & Input degrees & Target & Status & Bottleneck \\",
+        r"\hline",
+    ]
+    for candidate in cup_candidates:
+        cup_product = candidate.cup_product_candidate
+        assert cup_product is not None
+        level = cup_product.target_codimension
+        input_degrees = "+".join(str(item.cohomological_degree) for item in cup_product.inputs)
+        lines.append(
+            f"Level {level} & "
+            f"{latex_escape_text(input_degrees)} & "
+            f"{_latex_target_string(cup_product.expected_bockstein_degree(), level)} & "
+            f"{soft_break_identifier(candidate.obstruction_status.value)} & "
+            f"{soft_break_identifier(candidate.bottleneck.value)} \\\\"
+        )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)

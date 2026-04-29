@@ -67,6 +67,7 @@ def test_cli_generation_writes_expected_files(tmp_path: Path) -> None:
         output_dir / "classifier_report.md",
         output_dir / "feature_matrix.md",
         output_dir / "association_rules.md",
+        output_dir / "candidate_generation.md",
         output_dir / "latex" / "seed_dataset_summary.tex",
         output_dir / "latex" / "channel_table.tex",
         output_dir / "latex" / "bottleneck_summary.tex",
@@ -74,6 +75,9 @@ def test_cli_generation_writes_expected_files(tmp_path: Path) -> None:
         output_dir / "latex" / "classifier_report.tex",
         output_dir / "latex" / "feature_summary.tex",
         output_dir / "latex" / "association_rules.tex",
+        output_dir / "latex" / "candidate_generation.tex",
+        output_dir / "latex" / "coble_diaz_hierarchy.tex",
+        Path("data/generated_candidates.json"),
     }
 
     assert set(paths) == expected

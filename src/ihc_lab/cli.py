@@ -5,16 +5,21 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from ihc_lab.datasets import load_seed_rows
+from ihc_lab.candidate_generator import generate_all_candidates
+from ihc_lab.datasets import load_seed_rows, save_seed_rows
+from ihc_lab.ranking import rank_candidates
 from ihc_lab.reports import (
     association_rules_latex,
     association_rules_markdown,
     bottleneck_summary_latex,
     bottleneck_table_markdown,
+    candidate_generation_latex,
+    candidate_generation_markdown,
     channel_table_latex,
     channel_table_markdown,
     classifier_report_latex,
     classifier_report_markdown,
+    coble_diaz_hierarchy_latex,
     cup_product_validation_latex,
     cup_product_validation_markdown,
     dataset_summary_markdown,
@@ -26,10 +31,14 @@ from ihc_lab.reports import (
 
 def generate_reports(data_path: str | Path, output_dir: str | Path) -> list[Path]:
     records = load_seed_rows(data_path)
+    candidates = generate_all_candidates(records, max_level=5)
+    candidate_scores = rank_candidates(candidates)
     report_dir = Path(output_dir)
     latex_dir = report_dir / "latex"
     report_dir.mkdir(parents=True, exist_ok=True)
     latex_dir.mkdir(parents=True, exist_ok=True)
+    candidate_output_path = Path(data_path).parent / "generated_candidates.json"
+    save_seed_rows(candidates, candidate_output_path)
 
     outputs: dict[Path, str] = {
         report_dir / "seed_dataset_summary.md": dataset_summary_markdown(records),
@@ -41,6 +50,9 @@ def generate_reports(data_path: str | Path, output_dir: str | Path) -> list[Path
         report_dir / "classifier_report.md": classifier_report_markdown(records),
         report_dir / "feature_matrix.md": feature_matrix_markdown(records),
         report_dir / "association_rules.md": association_rules_markdown(records),
+        report_dir / "candidate_generation.md": candidate_generation_markdown(
+            candidates, candidate_scores
+        ),
         latex_dir / "seed_dataset_summary.tex": seed_dataset_summary_latex(records),
         latex_dir / "channel_table.tex": channel_table_latex(records),
         latex_dir / "bottleneck_summary.tex": bottleneck_summary_latex(records),
@@ -48,12 +60,16 @@ def generate_reports(data_path: str | Path, output_dir: str | Path) -> list[Path
         latex_dir / "classifier_report.tex": classifier_report_latex(records),
         latex_dir / "feature_summary.tex": feature_summary_latex(records),
         latex_dir / "association_rules.tex": association_rules_latex(records),
+        latex_dir / "candidate_generation.tex": candidate_generation_latex(
+            candidates, candidate_scores
+        ),
+        latex_dir / "coble_diaz_hierarchy.tex": coble_diaz_hierarchy_latex(candidates),
     }
 
     for path, content in outputs.items():
         path.write_text(content + "\n", encoding="utf-8")
 
-    return list(outputs)
+    return [candidate_output_path, *list(outputs)]
 
 
 def build_parser() -> argparse.ArgumentParser:

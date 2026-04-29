@@ -95,6 +95,16 @@ python -m ihc_lab.cli generate-reports
 
 Association rules are exploratory and not theorem-proving. They are used to recover mechanism signatures from the hand-verified seed corpus, such as links between package features, operations, channel labels, obstruction statuses, and bottlenecks.
 
+## Generating Candidate Reports
+
+The report command also emits generated formal candidates and bottleneck-priority reports:
+
+```powershell
+python -m ihc_lab.cli generate-reports
+```
+
+Generated candidates are formal proof targets. They are not new counterexamples, and the priority score is not a truth probability. The score is a compact research-priority heuristic for comparing formal validity, theorem analogy, survival bottlenecks, computability, and motivic-lift compatibility.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:

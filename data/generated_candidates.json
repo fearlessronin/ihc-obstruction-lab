@@ -1,0 +1,490 @@
+[
+  {
+    "active_operations": [
+      "cup_product",
+      "bockstein",
+      "unramified_survival"
+    ],
+    "bottleneck": "survival_proved_in_source",
+    "channel_labels": [
+      "cup_product_bockstein",
+      "brauer_unramified"
+    ],
+    "citation_keys": [
+      "Diaz2023",
+      "RahmanDiazKummer2026"
+    ],
+    "comments": "Generated reference row for the theorem-backed Diaz level-2 mechanism.",
+    "computability_level": "level_3_theorem_import",
+    "cup_product_candidate": {
+      "bottleneck": "survival_proved_in_source",
+      "coefficient": 2,
+      "comments": "Theorem-backed level-two source.",
+      "inputs": [
+        {
+          "class_name": "alpha",
+          "coefficient": 2,
+          "cohomological_degree": 1,
+          "comments": null,
+          "source_type": "enriques_double_cover_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S"
+        },
+        {
+          "class_name": "beta",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_2"
+        }
+      ],
+      "obstruction_status": "theorem_backed_obstruction",
+      "survival_status": "survival_proved_in_source",
+      "target_codimension": 2
+    },
+    "display_name": "Diaz level-2 generated reference",
+    "geometry_or_package": "Coble-Diaz level-2 cup-product package",
+    "id": "diaz_level_2_generated_or_reference",
+    "local_package": null,
+    "obstruction_status": "theorem_backed_obstruction",
+    "shadow_selector": null,
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "finite_coefficient_cup_product",
+      "bockstein"
+    ],
+    "survival_status": "survival_proved_in_source",
+    "torsion_trajectory": null,
+    "trust_level": "theorem_backed_literature"
+  },
+  {
+    "active_operations": [
+      "cup_product",
+      "bockstein"
+    ],
+    "bottleneck": "unramified_nonvanishing",
+    "channel_labels": [
+      "cup_product_bockstein"
+    ],
+    "citation_keys": [
+      "Diaz2023",
+      "RahmanDiazKummer2026"
+    ],
+    "comments": "Formal degree--twist valid; theorem-level survival/nonvanishing not proved.",
+    "computability_level": "level_4_candidate",
+    "cup_product_candidate": {
+      "bottleneck": "unramified_nonvanishing",
+      "coefficient": 2,
+      "comments": "Formal degree--twist valid; theorem-level survival/nonvanishing not proved.",
+      "inputs": [
+        {
+          "class_name": "alpha",
+          "coefficient": 2,
+          "cohomological_degree": 1,
+          "comments": null,
+          "source_type": "enriques_double_cover_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S"
+        },
+        {
+          "class_name": "beta_2",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_2"
+        },
+        {
+          "class_name": "beta_3",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_3"
+        }
+      ],
+      "obstruction_status": "candidate_survival_needed",
+      "survival_status": "unknown",
+      "target_codimension": 3
+    },
+    "display_name": "Coble-Diaz level-3 formal candidate",
+    "geometry_or_package": "Coble-Diaz level-3 cup-product package",
+    "id": "coble_diaz_level_3_candidate",
+    "local_package": null,
+    "obstruction_status": "candidate_survival_needed",
+    "shadow_selector": null,
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "finite_coefficient_cup_product",
+      "bockstein"
+    ],
+    "survival_status": "unknown",
+    "torsion_trajectory": null,
+    "trust_level": "generated_candidate"
+  },
+  {
+    "active_operations": [
+      "cup_product",
+      "bockstein"
+    ],
+    "bottleneck": "unramified_nonvanishing",
+    "channel_labels": [
+      "cup_product_bockstein"
+    ],
+    "citation_keys": [
+      "Diaz2023",
+      "RahmanDiazKummer2026"
+    ],
+    "comments": "Formal degree--twist valid; theorem-level survival/nonvanishing not proved.",
+    "computability_level": "level_4_candidate",
+    "cup_product_candidate": {
+      "bottleneck": "unramified_nonvanishing",
+      "coefficient": 2,
+      "comments": "Formal degree--twist valid; theorem-level survival/nonvanishing not proved.",
+      "inputs": [
+        {
+          "class_name": "alpha",
+          "coefficient": 2,
+          "cohomological_degree": 1,
+          "comments": null,
+          "source_type": "enriques_double_cover_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S"
+        },
+        {
+          "class_name": "beta_2",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_2"
+        },
+        {
+          "class_name": "beta_3",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_3"
+        },
+        {
+          "class_name": "beta_4",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_4"
+        }
+      ],
+      "obstruction_status": "candidate_survival_needed",
+      "survival_status": "unknown",
+      "target_codimension": 4
+    },
+    "display_name": "Coble-Diaz level-4 formal candidate",
+    "geometry_or_package": "Coble-Diaz level-4 cup-product package",
+    "id": "coble_diaz_level_4_candidate",
+    "local_package": null,
+    "obstruction_status": "candidate_survival_needed",
+    "shadow_selector": null,
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "finite_coefficient_cup_product",
+      "bockstein"
+    ],
+    "survival_status": "unknown",
+    "torsion_trajectory": null,
+    "trust_level": "generated_candidate"
+  },
+  {
+    "active_operations": [
+      "cup_product",
+      "bockstein"
+    ],
+    "bottleneck": "unramified_nonvanishing",
+    "channel_labels": [
+      "cup_product_bockstein"
+    ],
+    "citation_keys": [
+      "Diaz2023",
+      "RahmanDiazKummer2026"
+    ],
+    "comments": "Formal degree--twist valid; theorem-level survival/nonvanishing not proved.",
+    "computability_level": "level_4_candidate",
+    "cup_product_candidate": {
+      "bottleneck": "unramified_nonvanishing",
+      "coefficient": 2,
+      "comments": "Formal degree--twist valid; theorem-level survival/nonvanishing not proved.",
+      "inputs": [
+        {
+          "class_name": "alpha",
+          "coefficient": 2,
+          "cohomological_degree": 1,
+          "comments": null,
+          "source_type": "enriques_double_cover_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S"
+        },
+        {
+          "class_name": "beta_2",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_2"
+        },
+        {
+          "class_name": "beta_3",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_3"
+        },
+        {
+          "class_name": "beta_4",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_4"
+        },
+        {
+          "class_name": "beta_5",
+          "coefficient": 2,
+          "cohomological_degree": 2,
+          "comments": null,
+          "source_type": "brauer_detecting_class",
+          "theorem_status": "theorem_backed_source",
+          "twist": 1,
+          "variety_factor": "S_5"
+        }
+      ],
+      "obstruction_status": "candidate_survival_needed",
+      "survival_status": "unknown",
+      "target_codimension": 5
+    },
+    "display_name": "Coble-Diaz level-5 formal candidate",
+    "geometry_or_package": "Coble-Diaz level-5 cup-product package",
+    "id": "coble_diaz_level_5_candidate",
+    "local_package": null,
+    "obstruction_status": "candidate_survival_needed",
+    "shadow_selector": null,
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "finite_coefficient_cup_product",
+      "bockstein"
+    ],
+    "survival_status": "unknown",
+    "torsion_trajectory": null,
+    "trust_level": "generated_candidate"
+  },
+  {
+    "active_operations": [
+      "shadow_selection"
+    ],
+    "bottleneck": "global_transport_survival",
+    "channel_labels": [
+      "shadow_selection"
+    ],
+    "citation_keys": [
+      "RahmanTorsionTrajectories2026",
+      "RahmanIntegralPerverseObstructions2026"
+    ],
+    "comments": "Generated local-discriminant shadow candidate; global transport not proved.",
+    "computability_level": "level_4_candidate",
+    "cup_product_candidate": null,
+    "display_name": "Surface A1 local discriminant package generated shadow candidate",
+    "geometry_or_package": "A1 surface singularity",
+    "id": "a1_surface_local_discriminant_z2_shadow_candidate",
+    "local_package": {
+      "comments": "E = Z/2.",
+      "computability_level": "level_2_computed_group",
+      "dimension": 2,
+      "discriminant_form": null,
+      "exceptional_lattice_matrix": null,
+      "link_model": "link torsion package",
+      "local_group": {
+        "cyclic_factors": [
+          2
+        ]
+      },
+      "monodromy_matrix": null,
+      "prime_support": [
+        2
+      ],
+      "singularity_type": "A1 surface singularity"
+    },
+    "obstruction_status": "formal_candidate",
+    "shadow_selector": {
+      "active_sequence": null,
+      "coefficient": 2,
+      "comments": "Generated local-discriminant shadow selector.",
+      "selected_group": {
+        "cyclic_factors": [
+          2
+        ]
+      },
+      "selection_type": "order_two_shadow_candidate",
+      "source_group": {
+        "cyclic_factors": [
+          2
+        ]
+      },
+      "status": "generated_candidate"
+    },
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "local_discriminant_shadow_generator"
+    ],
+    "survival_status": "unknown",
+    "torsion_trajectory": null,
+    "trust_level": "generated_candidate"
+  },
+  {
+    "active_operations": [
+      "shadow_selection"
+    ],
+    "bottleneck": "global_transport_survival",
+    "channel_labels": [
+      "shadow_selection"
+    ],
+    "citation_keys": [
+      "RahmanTorsionTrajectories2026"
+    ],
+    "comments": "Generated local-discriminant shadow candidate; global transport not proved.",
+    "computability_level": "level_4_candidate",
+    "cup_product_candidate": null,
+    "display_name": "Surface D4 local discriminant package generated shadow candidate",
+    "geometry_or_package": "D4 surface singularity",
+    "id": "d4_surface_local_discriminant_z2_shadow_candidate",
+    "local_package": {
+      "comments": "E = Z/2 \u2295 Z/2.",
+      "computability_level": "level_2_computed_group",
+      "dimension": 2,
+      "discriminant_form": null,
+      "exceptional_lattice_matrix": null,
+      "link_model": "link torsion package",
+      "local_group": {
+        "cyclic_factors": [
+          2,
+          2
+        ]
+      },
+      "monodromy_matrix": null,
+      "prime_support": [
+        2
+      ],
+      "singularity_type": "D4 surface singularity"
+    },
+    "obstruction_status": "formal_candidate",
+    "shadow_selector": {
+      "active_sequence": null,
+      "coefficient": 2,
+      "comments": "Generated local-discriminant shadow selector.",
+      "selected_group": {
+        "cyclic_factors": [
+          2
+        ]
+      },
+      "selection_type": "order_two_shadow_candidate",
+      "source_group": {
+        "cyclic_factors": [
+          2,
+          2
+        ]
+      },
+      "status": "generated_candidate"
+    },
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "local_discriminant_shadow_generator"
+    ],
+    "survival_status": "unknown",
+    "torsion_trajectory": null,
+    "trust_level": "generated_candidate"
+  },
+  {
+    "active_operations": [
+      "shadow_selection"
+    ],
+    "bottleneck": "global_transport_survival",
+    "channel_labels": [
+      "shadow_selection"
+    ],
+    "citation_keys": [
+      "RahmanTorsionTrajectories2026"
+    ],
+    "comments": "Generated local-discriminant shadow candidate; global transport not proved.",
+    "computability_level": "level_4_candidate",
+    "cup_product_candidate": null,
+    "display_name": "Brieskorn x^2+y^3+z^11 local discriminant package generated shadow candidate",
+    "geometry_or_package": "Brieskorn singularity x^2+y^3+z^11",
+    "id": "brieskorn_x2_y3_z11_local_discriminant_mod5_shadow_candidate",
+    "local_package": {
+      "comments": "E = Z/5.",
+      "computability_level": "level_2_computed_group",
+      "dimension": 2,
+      "discriminant_form": null,
+      "exceptional_lattice_matrix": null,
+      "link_model": "Brieskorn link torsion package",
+      "local_group": {
+        "cyclic_factors": [
+          5
+        ]
+      },
+      "monodromy_matrix": null,
+      "prime_support": [
+        5
+      ],
+      "singularity_type": "Brieskorn x^2+y^3+z^11"
+    },
+    "obstruction_status": "formal_candidate",
+    "shadow_selector": {
+      "active_sequence": null,
+      "coefficient": 5,
+      "comments": "Generated local-discriminant shadow selector.",
+      "selected_group": {
+        "cyclic_factors": [
+          5
+        ]
+      },
+      "selection_type": "mod_five_shadow_candidate",
+      "source_group": {
+        "cyclic_factors": [
+          5
+        ]
+      },
+      "status": "generated_candidate"
+    },
+    "source_corpus": "generated_candidate_corpus",
+    "source_packages": [
+      "local_discriminant_shadow_generator"
+    ],
+    "survival_status": "unknown",
+    "torsion_trajectory": null,
+    "trust_level": "generated_candidate"
+  }
+]
