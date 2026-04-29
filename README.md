@@ -8,6 +8,12 @@ It supports the paper project:
 
 This repository does not prove new counterexamples automatically. It provides a reproducible schema, validation layer, and seed dataset for known and candidate obstruction mechanisms: local discriminant packages, shadow selectors, torsion trajectories, finite-coefficient cup-product Bockstein candidates, lattice-saturation records, nodal free-relation channels, and proof bottlenecks.
 
+## Release Status
+
+Current release: `v0.1.0`.
+
+This release includes the obstruction-channel schema, 12-row seed corpus, validation layer, reports, classifier, feature extraction, association-rule mining, formal candidate generation, bottleneck ranking, and CI-backed pytest coverage.
+
 ## Installation
 
 Use Python 3.11 or newer.
@@ -85,6 +91,8 @@ python -m ihc_lab.cli generate-reports
 
 The command writes Markdown reports into `reports/` and LaTeX table fragments into `reports/latex/`. These outputs are intended to support the paper's Seed Dataset and Channel Calibration section.
 
+For full reproduction notes, see `docs/reproducibility.md`.
+
 ## Exploratory Association-Rule Reports
 
 The same report command also generates feature-matrix and association-rule reports:
@@ -104,6 +112,12 @@ python -m ihc_lab.cli generate-reports
 ```
 
 Generated candidates are formal proof targets. They are not new counterexamples, and the priority score is not a truth probability. The score is a compact research-priority heuristic for comparing formal validity, theorem analogy, survival bottlenecks, computability, and motivic-lift compatibility.
+
+## Non-Claims
+
+Generated candidates are proof targets, not theorem-backed counterexamples. Priority scores are research-priority scores, not probabilities of truth. Theorem-backed status requires citation and human verification.
+
+See `docs/non_claims.md` for the concise release policy.
 
 ## Local/Remote Sync
 
