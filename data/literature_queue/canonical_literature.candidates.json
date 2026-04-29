@@ -1,0 +1,31 @@
+[
+  {
+    "id": "manual_sample_unramified_channel",
+    "display_name": "Manual sample unramified channel extraction",
+    "source_corpus": "literature_review_queue",
+    "trust_level": "llm_extracted_unverified",
+    "geometry_or_package": "colliot_theleme_voisin_2012_unramified",
+    "channel_labels": [
+      "brauer_unramified"
+    ],
+    "source_packages": [
+      "unramified_cohomology_class"
+    ],
+    "active_operations": [
+      "residue_test",
+      "unramified_survival"
+    ],
+    "survival_status": "unknown",
+    "obstruction_status": "unknown",
+    "computability_level": "level_3_theorem_import",
+    "bottleneck": "unknown",
+    "citation_keys": [
+      "ColliotTheleneVoisin2012"
+    ],
+    "comments": "Promoted from literature review queue. Original extraction_id: manual_sample_unramified. Reviewer notes: Sample accepted for review workflow demonstration only; not theorem-backed. Unmapped bottleneck label: verify_theorem_statement.",
+    "local_package": null,
+    "shadow_selector": null,
+    "torsion_trajectory": null,
+    "cup_product_candidate": null
+  }
+]

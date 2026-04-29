@@ -17,5 +17,24 @@
     "extraction_notes": "Sample manual import row.",
     "trust_level": "theorem_backed_literature",
     "review_status": "reviewed_accept"
+  },
+  {
+    "extraction_id": "manual_sample_lattice",
+    "source_id": "aljovin_movasati_villaflor_2019_fermat",
+    "proposed_record_id": "manual_sample_lattice_channel",
+    "proposed_display_name": "Manual sample lattice benchmark extraction",
+    "proposed_channel_labels": ["lattice_saturation", "computed_lattice_benchmark"],
+    "proposed_source_packages": ["linear_algebraic_cycle_lattice", "hodge_cycle_lattice"],
+    "proposed_active_operations": ["smith_normal_form"],
+    "proposed_survival_status": "unknown",
+    "proposed_obstruction_status": "unknown",
+    "proposed_computability_level": "level_2_computed_group",
+    "proposed_bottleneck": "lattice_identification",
+    "proposed_citation_keys": ["AljovinMovasatiVillaflor2019"],
+    "evidence_snippets": ["Sample manually supplied lattice snippet; not theorem verification."],
+    "missing_fields": ["full_computation_details"],
+    "extraction_notes": "Sample manual import row for rejection workflow.",
+    "trust_level": "llm_extracted_unverified",
+    "review_status": "needs_human_review"
   }
 ]

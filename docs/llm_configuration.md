@@ -53,3 +53,5 @@ API usage may incur provider charges.
 ## Safety
 
 All LLM and manual outputs are reset to `llm_extracted_unverified` and `needs_human_review`. LLM extraction is not theorem verification, and extracted rows are not primary claims until human review and explicit promotion.
+
+LLM/manual outputs must pass the human review workflow before export. Provider outputs are not theorem verification and are never promoted to theorem-backed status by default.

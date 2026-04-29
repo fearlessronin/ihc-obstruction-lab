@@ -22,15 +22,15 @@
       "ColliotTheleneVoisin2012"
     ],
     "evidence_snippets": [
-      "Sample manually supplied snippet; not theorem verification."
+      "Sample evidence snippet for workflow demonstration."
     ],
     "missing_fields": [
       "full_theorem_statement"
     ],
     "extraction_notes": "Sample manual import row. Model-supplied trust/review status was reset to unverified/needs_human_review.",
     "trust_level": "llm_extracted_unverified",
-    "review_status": "needs_human_review",
-    "reviewer_notes": null
+    "review_status": "reviewed_accept",
+    "reviewer_notes": "Sample accepted for review workflow demonstration only; not theorem-backed."
   },
   {
     "extraction_id": "manual_sample_lattice",
@@ -63,7 +63,7 @@
     ],
     "extraction_notes": "Sample manual import row for rejection workflow.",
     "trust_level": "llm_extracted_unverified",
-    "review_status": "needs_human_review",
-    "reviewer_notes": null
+    "review_status": "reviewed_reject",
+    "reviewer_notes": "Sample rejected for workflow demonstration."
   }
 ]

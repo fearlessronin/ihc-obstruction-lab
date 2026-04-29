@@ -1,0 +1,22 @@
+[
+  {
+    "extraction_id": "manual_sample_unramified",
+    "decision": "accept",
+    "reviewer": "sample_reviewer",
+    "reviewer_notes": "Sample accepted for review workflow demonstration only; not theorem-backed.",
+    "corrected_channel_labels": ["brauer_unramified"],
+    "corrected_bottleneck": "verify_theorem_statement",
+    "corrected_citation_keys": ["ColliotTheleneVoisin2012"],
+    "corrected_evidence_snippets": ["Sample evidence snippet for workflow demonstration."],
+    "corrected_obstruction_status": "unknown",
+    "corrected_survival_status": "unknown",
+    "corrected_computability_level": "level_3_theorem_import",
+    "trust_level_override": null
+  },
+  {
+    "extraction_id": "manual_sample_lattice",
+    "decision": "reject",
+    "reviewer": "sample_reviewer",
+    "reviewer_notes": "Sample rejected for workflow demonstration."
+  }
+]

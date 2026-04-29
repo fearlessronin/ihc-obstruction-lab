@@ -3,22 +3,36 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from ihc_lab.candidate_generator import generate_all_candidates
 from ihc_lab.datasets import load_seed_rows, save_seed_rows
-from ihc_lab.literature.extraction_schema import save_extracted_candidates
+from ihc_lab.literature.extraction_schema import (
+    load_extracted_candidates,
+    save_extracted_candidates,
+)
 from ihc_lab.literature.extract_with_llm import extract_candidates_from_packets
 from ihc_lab.literature.ingestion import load_excerpt_txt
 from ihc_lab.literature.llm_client import create_llm_client
 from ihc_lab.literature.llm_config import LLMConfig, load_llm_config
 from ihc_lab.literature.manual_import import import_manual_extraction
 from ihc_lab.literature.packet_builder import build_packets, load_packets_json, save_packets_json
+from ihc_lab.literature.promotion import (
+    export_promoted_candidates,
+    promote_reviewed_candidates,
+)
+from ihc_lab.literature.review_actions import (
+    apply_review_decisions,
+    load_review_decisions,
+)
 from ihc_lab.literature.reports import (
     llm_extraction_report_markdown,
     literature_packets_markdown,
     literature_queue_latex,
     literature_queue_markdown,
+    promoted_candidates_markdown,
+    review_status_report_markdown,
 )
 from ihc_lab.literature.review_queue import load_review_queue
 from ihc_lab.literature.sources import load_literature_sources
@@ -196,6 +210,41 @@ def run_manual_import(
     return [Path(output_path), report]
 
 
+def apply_literature_review(
+    extracted_path: str | Path,
+    review_path: str | Path,
+    output_path: str | Path,
+    report_path: str | Path,
+) -> list[Path]:
+    candidates = load_extracted_candidates(extracted_path)
+    decisions = load_review_decisions(review_path)
+    reviewed = apply_review_decisions(candidates, decisions)
+    save_extracted_candidates(reviewed, output_path)
+    report = Path(report_path)
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(review_status_report_markdown(reviewed) + "\n", encoding="utf-8")
+    return [Path(output_path), report]
+
+
+def export_reviewed_literature(
+    reviewed_path: str | Path,
+    output_path: str | Path,
+    report_path: str | Path,
+    trust_overrides_path: str | Path | None = None,
+) -> list[Path]:
+    candidates = load_extracted_candidates(reviewed_path)
+    overrides: dict[str, str] | None = None
+    if trust_overrides_path is not None:
+        with Path(trust_overrides_path).open("r", encoding="utf-8") as handle:
+            overrides = json.load(handle)
+    promoted = promote_reviewed_candidates(candidates, overrides)
+    export_promoted_candidates(promoted, output_path)
+    report = Path(report_path)
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(promoted_candidates_markdown(promoted) + "\n", encoding="utf-8")
+    return [Path(output_path), report]
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ihc-lab")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -233,6 +282,21 @@ def build_parser() -> argparse.ArgumentParser:
     manual.add_argument("--input", default="data/literature_queue/manual_extraction.json")
     manual.add_argument("--output", default="data/literature_queue/extracted_rows.manual.json")
     manual.add_argument("--report", default="reports/literature_manual_extraction.md")
+
+    review = subparsers.add_parser("apply-literature-review")
+    review.add_argument("--extracted", default="data/literature_queue/extracted_rows.manual.json")
+    review.add_argument("--review", default="data/literature_queue/review_manifest.sample.json")
+    review.add_argument("--output", default="data/literature_queue/extracted_rows.reviewed.json")
+    review.add_argument("--report", default="reports/literature_review_status.md")
+
+    export = subparsers.add_parser("export-reviewed-literature")
+    export.add_argument("--reviewed", default="data/literature_queue/extracted_rows.reviewed.json")
+    export.add_argument(
+        "--output",
+        default="data/literature_queue/canonical_literature.candidates.json",
+    )
+    export.add_argument("--report", default="reports/promoted_literature_candidates.md")
+    export.add_argument("--trust-overrides")
 
     return parser
 
@@ -279,6 +343,26 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.command == "import-manual-extraction":
         paths = run_manual_import(args.input, args.output, args.report)
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "apply-literature-review":
+        paths = apply_literature_review(
+            args.extracted,
+            args.review,
+            args.output,
+            args.report,
+        )
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "export-reviewed-literature":
+        paths = export_reviewed_literature(
+            args.reviewed,
+            args.output,
+            args.report,
+            args.trust_overrides,
+        )
         for path in paths:
             print(path)
         return 0

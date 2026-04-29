@@ -69,3 +69,22 @@ python -m ihc_lab.cli import-manual-extraction --input data/literature_queue/man
 Optional provider adapters are available for `anthropic` and `openai-compatible`, but external calls require `--allow-provider-call`. All LLM/manual outputs are force-reset to `llm_extracted_unverified` and `needs_human_review`.
 
 See `docs/llm_configuration.md` for config files, environment variables, and provider safety notes.
+
+## Phase 6D: Human Review and Controlled Promotion
+
+Review decisions are stored in a manifest and applied to extracted rows:
+
+```powershell
+python -m ihc_lab.cli apply-literature-review
+```
+
+Accepted rows can then be exported as separate candidate `ObstructionChannel` records:
+
+```powershell
+python -m ihc_lab.cli export-reviewed-literature
+```
+
+The export writes `data/literature_queue/canonical_literature.candidates.json`.
+It never modifies `data/seed_rows.json` automatically.
+
+Default promotion keeps extracted rows as `llm_extracted_unverified` unless a controlled trust override is supplied. A `theorem_backed_literature` override requires reviewer notes, citation keys, and evidence snippets. Provider and manual outputs are not theorem verification.

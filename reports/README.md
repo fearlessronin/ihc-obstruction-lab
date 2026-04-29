@@ -14,5 +14,7 @@ Generated Markdown reports:
 - `literature_packets.md`
 - `literature_llm_extraction.md`
 - `literature_manual_extraction.md`
+- `literature_review_status.md`
+- `promoted_literature_candidates.md`
 
 LaTeX table fragments are in `reports/latex/`.

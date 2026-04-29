@@ -150,6 +150,17 @@ Provider mode is optional, uses user-owned API keys, and requires `--allow-provi
 
 See `docs/llm_configuration.md` for configuration details.
 
+## Literature Review and Promotion
+
+Human review decisions can be applied and exported without modifying `data/seed_rows.json`:
+
+```powershell
+python -m ihc_lab.cli apply-literature-review
+python -m ihc_lab.cli export-reviewed-literature
+```
+
+Reviewed exports go to `data/literature_queue/canonical_literature.candidates.json`.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:
