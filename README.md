@@ -85,6 +85,16 @@ python -m ihc_lab.cli generate-reports
 
 The command writes Markdown reports into `reports/` and LaTeX table fragments into `reports/latex/`. These outputs are intended to support the paper's Seed Dataset and Channel Calibration section.
 
+## Exploratory Association-Rule Reports
+
+The same report command also generates feature-matrix and association-rule reports:
+
+```powershell
+python -m ihc_lab.cli generate-reports
+```
+
+Association rules are exploratory and not theorem-proving. They are used to recover mechanism signatures from the hand-verified seed corpus, such as links between package features, operations, channel labels, obstruction statuses, and bottlenecks.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:

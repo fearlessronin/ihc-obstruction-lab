@@ -7,6 +7,8 @@ from pathlib import Path
 
 from ihc_lab.datasets import load_seed_rows
 from ihc_lab.reports import (
+    association_rules_latex,
+    association_rules_markdown,
     bottleneck_summary_latex,
     bottleneck_table_markdown,
     channel_table_latex,
@@ -16,6 +18,8 @@ from ihc_lab.reports import (
     cup_product_validation_latex,
     cup_product_validation_markdown,
     dataset_summary_markdown,
+    feature_matrix_markdown,
+    feature_summary_latex,
     seed_dataset_summary_latex,
 )
 
@@ -35,11 +39,15 @@ def generate_reports(data_path: str | Path, output_dir: str | Path) -> list[Path
         ),
         report_dir / "cup_product_validation.md": cup_product_validation_markdown(records),
         report_dir / "classifier_report.md": classifier_report_markdown(records),
+        report_dir / "feature_matrix.md": feature_matrix_markdown(records),
+        report_dir / "association_rules.md": association_rules_markdown(records),
         latex_dir / "seed_dataset_summary.tex": seed_dataset_summary_latex(records),
         latex_dir / "channel_table.tex": channel_table_latex(records),
         latex_dir / "bottleneck_summary.tex": bottleneck_summary_latex(records),
         latex_dir / "cup_product_validation.tex": cup_product_validation_latex(records),
         latex_dir / "classifier_report.tex": classifier_report_latex(records),
+        latex_dir / "feature_summary.tex": feature_summary_latex(records),
+        latex_dir / "association_rules.tex": association_rules_latex(records),
     }
 
     for path, content in outputs.items():

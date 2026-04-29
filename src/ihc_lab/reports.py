@@ -4,8 +4,15 @@ from __future__ import annotations
 
 from collections import Counter
 
+from ihc_lab.association_rules import (
+    AssociationRule,
+    filter_interesting_rules,
+    mine_association_rules,
+    transactions_from_feature_matrix,
+)
 from ihc_lab.channels import ObstructionChannel
 from ihc_lab.enums import ChannelLabel
+from ihc_lab.features import extract_feature_matrix
 from ihc_lab.rule_classifier import classify_records
 
 
@@ -15,6 +22,24 @@ def _sorted_counts(values: list[str]) -> dict[str, int]:
 
 def _cup_product_records(records: list[ObstructionChannel]) -> list[ObstructionChannel]:
     return [record for record in records if record.cup_product_candidate is not None]
+
+
+def _binary_feature_names(feature_matrix: list[dict]) -> list[str]:
+    return sorted(
+        {
+            name
+            for row in feature_matrix
+            for name, value in row.items()
+            if isinstance(value, bool)
+        }
+    )
+
+
+def _interesting_rules(records: list[ObstructionChannel]) -> list[AssociationRule]:
+    feature_matrix = extract_feature_matrix(records)
+    transactions = transactions_from_feature_matrix(feature_matrix)
+    rules = mine_association_rules(transactions)
+    return filter_interesting_rules(rules)
 
 
 def dataset_summary_markdown(records: list[ObstructionChannel]) -> str:
@@ -146,6 +171,77 @@ def classifier_report_markdown(records: list[ObstructionChannel]) -> str:
             f"{result.bottleneck} | "
             f"{explanations} |"
         )
+    return "\n".join(lines)
+
+
+def feature_matrix_markdown(records: list[ObstructionChannel]) -> str:
+    feature_matrix = extract_feature_matrix(records)
+    binary_features = _binary_feature_names(feature_matrix)
+    selected_prefixes = (
+        "channel_",
+        "trust_",
+        "status_",
+        "bottleneck_",
+        "has_",
+        "local_",
+        "cup_product_",
+        "valid_",
+    )
+
+    lines = [
+        "# Feature Matrix Summary",
+        "",
+        f"Total records: {len(records)}",
+        f"Total binary features: {len(binary_features)}",
+        "",
+        "| record id | true feature count | selected true features |",
+        "| --- | ---: | --- |",
+    ]
+
+    for row in feature_matrix:
+        true_features = sorted(
+            name for name, value in row.items() if isinstance(value, bool) and value
+        )
+        selected = [
+            name for name in true_features if name.startswith(selected_prefixes)
+        ]
+        lines.append(
+            "| "
+            f"{row['record_id']} | "
+            f"{len(true_features)} | "
+            f"{', '.join(selected)} |"
+        )
+
+    return "\n".join(lines)
+
+
+def association_rules_markdown(records: list[ObstructionChannel]) -> str:
+    rules = _interesting_rules(records)
+    lines = [
+        "# Association Rules",
+        "",
+        "Rules mined from seed dataset.",
+        "",
+        "Parameters:",
+        "- max antecedent size 2",
+        "- min confidence 0.8",
+        f"- seed records {len(records)}",
+        "",
+        "| antecedent | consequent | support count | support | confidence | lift |",
+        "| --- | --- | ---: | ---: | ---: | ---: |",
+    ]
+
+    for rule in rules:
+        lines.append(
+            "| "
+            f"{', '.join(rule.antecedent)} | "
+            f"{rule.consequent} | "
+            f"{rule.support_count} | "
+            f"{rule.support:.2f} | "
+            f"{rule.confidence:.2f} | "
+            f"{rule.lift:.2f} |"
+        )
+
     return "\n".join(lines)
 
 
@@ -302,4 +398,60 @@ def classifier_report_latex(records: list[ObstructionChannel]) -> str:
             f"{latex_escape_text(explanation)}"
         )
     lines.append(r"\end{itemize}")
+    return "\n".join(lines)
+
+
+def association_rules_latex(records: list[ObstructionChannel]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Exploratory association rules mined from seed-row features.}",
+        r"\label{tab:association-rules}",
+        r"\footnotesize",
+        r"\begin{tabular}{|p{0.38\textwidth}|p{0.28\textwidth}|p{0.12\textwidth}|p{0.14\textwidth}|}",
+        r"\hline",
+        r"Antecedent & Consequent & Support & Confidence \\",
+        r"\hline",
+    ]
+    for rule in _interesting_rules(records):
+        lines.append(
+            f"{soft_break_identifier(', '.join(rule.antecedent))} & "
+            f"{soft_break_identifier(rule.consequent)} & "
+            f"{rule.support_count} & "
+            f"{rule.confidence:.2f} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def feature_summary_latex(records: list[ObstructionChannel]) -> str:
+    feature_matrix = extract_feature_matrix(records)
+    binary_features = _binary_feature_names(feature_matrix)
+    metrics = {
+        "total records": len(records),
+        "total binary features observed": len(binary_features),
+        "multichannel rows": sum(1 for row in feature_matrix if row["is_multichannel"]),
+        "rows with local package": sum(1 for row in feature_matrix if row["has_local_package"]),
+        "rows with cup-product candidate": sum(
+            1 for row in feature_matrix if row["has_cup_product_candidate"]
+        ),
+        "rows with shadow selector": sum(
+            1 for row in feature_matrix if row["has_shadow_selector"]
+        ),
+    }
+
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Feature matrix summary for the seed dataset.}",
+        r"\label{tab:feature-summary}",
+        r"\footnotesize",
+        r"\begin{tabular}{|p{0.58\textwidth}|p{0.18\textwidth}|}",
+        r"\hline",
+        r"Metric & Value \\",
+        r"\hline",
+    ]
+    for metric, value in metrics.items():
+        lines.append(f"{latex_escape_text(metric)} & {value} \\\\")
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)
