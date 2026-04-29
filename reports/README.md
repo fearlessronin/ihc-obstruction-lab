@@ -16,5 +16,7 @@ Generated Markdown reports:
 - `literature_manual_extraction.md`
 - `literature_review_status.md`
 - `promoted_literature_candidates.md`
+- `canonical_literature_table.md`
 
 LaTeX table fragments are in `reports/latex/`.
+Canonical literature LaTeX output: `reports/latex/canonical_literature_table.tex`.

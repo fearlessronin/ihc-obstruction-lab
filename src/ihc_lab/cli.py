@@ -7,7 +7,11 @@ import json
 from pathlib import Path
 
 from ihc_lab.candidate_generator import generate_all_candidates
-from ihc_lab.datasets import load_seed_rows, save_seed_rows
+from ihc_lab.datasets import (
+    load_canonical_literature_rows,
+    load_seed_rows,
+    save_seed_rows,
+)
 from ihc_lab.literature.extraction_schema import (
     load_extracted_candidates,
     save_extracted_candidates,
@@ -44,6 +48,8 @@ from ihc_lab.reports import (
     bottleneck_table_markdown,
     candidate_generation_latex,
     candidate_generation_markdown,
+    canonical_literature_table_latex,
+    canonical_literature_table_markdown,
     channel_table_latex,
     channel_table_markdown,
     classifier_report_latex,
@@ -98,7 +104,44 @@ def generate_reports(data_path: str | Path, output_dir: str | Path) -> list[Path
     for path, content in outputs.items():
         path.write_text(content + "\n", encoding="utf-8")
 
-    return [candidate_output_path, *list(outputs)]
+    canonical_path = Path("data/canonical_literature_rows.json")
+    canonical_outputs: dict[Path, str] = {}
+    if canonical_path.exists():
+        canonical_rows = load_canonical_literature_rows(canonical_path)
+        canonical_outputs = {
+            report_dir / "canonical_literature_table.md": (
+                canonical_literature_table_markdown(canonical_rows)
+            ),
+            latex_dir / "canonical_literature_table.tex": (
+                canonical_literature_table_latex(canonical_rows)
+            ),
+        }
+        for path, content in canonical_outputs.items():
+            path.write_text(content + "\n", encoding="utf-8")
+
+    return [candidate_output_path, *list(outputs), *list(canonical_outputs)]
+
+
+def generate_canonical_literature_report(
+    data_path: str | Path,
+    output_dir: str | Path,
+) -> list[Path]:
+    records = load_canonical_literature_rows(data_path)
+    report_dir = Path(output_dir)
+    latex_dir = report_dir / "latex"
+    report_dir.mkdir(parents=True, exist_ok=True)
+    latex_dir.mkdir(parents=True, exist_ok=True)
+    outputs = {
+        report_dir / "canonical_literature_table.md": (
+            canonical_literature_table_markdown(records)
+        ),
+        latex_dir / "canonical_literature_table.tex": (
+            canonical_literature_table_latex(records)
+        ),
+    }
+    for path, content in outputs.items():
+        path.write_text(content + "\n", encoding="utf-8")
+    return list(outputs)
 
 
 def generate_literature_report(
@@ -253,6 +296,10 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--data-path", default="data/seed_rows.json")
     generate.add_argument("--output-dir", default="reports")
 
+    canonical = subparsers.add_parser("canonical-literature-report")
+    canonical.add_argument("--data-path", default="data/canonical_literature_rows.json")
+    canonical.add_argument("--output-dir", default="reports")
+
     literature = subparsers.add_parser("literature-report")
     literature.add_argument(
         "--raw-sources-path",
@@ -307,6 +354,11 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "generate-reports":
         paths = generate_reports(args.data_path, args.output_dir)
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "canonical-literature-report":
+        paths = generate_canonical_literature_report(args.data_path, args.output_dir)
         for path in paths:
             print(path)
         return 0

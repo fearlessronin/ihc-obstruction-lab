@@ -26,5 +26,40 @@ def save_seed_rows(records: Iterable[ObstructionChannel], path: str | Path) -> N
         handle.write("\n")
 
 
+def load_canonical_literature_rows(
+    path: str | Path = "data/canonical_literature_rows.json",
+) -> list[ObstructionChannel]:
+    dataset_path = Path(path)
+    with dataset_path.open("r", encoding="utf-8") as handle:
+        raw_records = json.load(handle)
+    return [ObstructionChannel.from_dict(item) for item in raw_records]
+
+
+def save_canonical_literature_rows(
+    records: Iterable[ObstructionChannel], path: str | Path
+) -> None:
+    dataset_path = Path(path)
+    dataset_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = [record.to_dict() for record in records]
+    with dataset_path.open("w", encoding="utf-8") as handle:
+        json.dump(payload, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+
+
+def combined_literature_summary(
+    seed_rows: list[ObstructionChannel] | None = None,
+    canonical_rows: list[ObstructionChannel] | None = None,
+    generated_candidates: list[ObstructionChannel] | None = None,
+) -> dict[str, int]:
+    return {
+        "seed_rows": len(seed_rows or []),
+        "canonical_literature_rows": len(canonical_rows or []),
+        "generated_candidates": len(generated_candidates or []),
+        "total": len(seed_rows or [])
+        + len(canonical_rows or [])
+        + len(generated_candidates or []),
+    }
+
+
 def dataset_summary(records: list[ObstructionChannel]) -> dict:
     return validate_seed_rows(records)

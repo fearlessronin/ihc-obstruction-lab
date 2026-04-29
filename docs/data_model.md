@@ -6,6 +6,13 @@ This is a short guide to the v0.1.0 data model. See the project `README.md` for 
 
 The main row type. It records an identifier, display name, source corpus, trust level, geometry/package description, channel labels, active operations, survival status, obstruction status, computability level, bottleneck, citation keys, comments, and optional structured payloads.
 
+Repository datasets using this row shape include:
+
+- `data/seed_rows.json`: hand-verified seed and calibration corpus for main experiments.
+- `data/generated_candidates.json`: formal generated candidates and proof targets.
+- `data/literature_queue/*.json`: LLM/manual extraction, review, and controlled promotion workflow.
+- `data/canonical_literature_rows.json`: manually curated canonical literature mechanism anchors.
+
 ## LocalPackage
 
 Stores local singularity package data such as singularity type, dimension, finite local group, optional discriminant/link/lattice data, prime support, computability level, and comments.

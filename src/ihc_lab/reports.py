@@ -298,6 +298,29 @@ def candidate_generation_markdown(
     return "\n".join(lines)
 
 
+def canonical_literature_table_markdown(records: list[ObstructionChannel]) -> str:
+    lines = [
+        "# Canonical Literature Mechanism Rows",
+        "",
+        f"Total rows: {len(records)}",
+        "",
+        "| id | display name | channels | status | bottleneck | citations |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for record in records:
+        channels = ", ".join(label.value for label in record.channel_labels)
+        lines.append(
+            "| "
+            f"{record.id} | "
+            f"{record.display_name} | "
+            f"{channels} | "
+            f"{record.obstruction_status.value} | "
+            f"{record.bottleneck.value} | "
+            f"{', '.join(record.citation_keys)} |"
+        )
+    return "\n".join(lines)
+
+
 def latex_escape_text(s: str) -> str:
     if "$" in s or "\\" in s:
         return s
@@ -534,6 +557,31 @@ def candidate_generation_latex(
             f"{_candidate_target_latex(candidate)} & "
             f"{soft_break_identifier(candidate.bottleneck.value)} & "
             f"{score.score:.3f} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def canonical_literature_table_latex(records: list[ObstructionChannel]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Canonical literature mechanism anchors.}",
+        r"\label{tab:canonical-literature-anchors}",
+        r"\footnotesize",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.30\textwidth}|p{0.28\textwidth}|p{0.18\textwidth}|p{0.14\textwidth}|}",
+        r"\hline",
+        r"Record & Channels & Status & Citations \\",
+        r"\hline",
+    ]
+    for record in records:
+        channels = ", ".join(label.value for label in record.channel_labels)
+        lines.append(
+            f"{soft_break_identifier(record.id)} & "
+            f"{soft_break_identifier(channels)} & "
+            f"{soft_break_identifier(record.obstruction_status.value)} & "
+            f"{soft_break_identifier(', '.join(record.citation_keys))} \\\\"
         )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)

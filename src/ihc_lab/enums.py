@@ -58,6 +58,11 @@ class ChannelLabel(ValueEnum):
     degeneration_combinatorics = "degeneration_combinatorics"
     stacky_stabilizer = "stacky_stabilizer"
     unimodular_boundary = "unimodular_boundary"
+    torsion_cohomology_operation = "torsion_cohomology_operation"
+    channel_calibration = "channel_calibration"
+    boundary_behavior = "boundary_behavior"
+    categorical_ihc = "categorical_ihc"
+    motivic_realization = "motivic_realization"
 
 
 class OperationLabel(ValueEnum):
@@ -76,6 +81,11 @@ class OperationLabel(ValueEnum):
     stack_coarse_comparison = "stack_coarse_comparison"
     monodromy_comparison = "monodromy_comparison"
     global_relation = "global_relation"
+    cohomology_operation = "cohomology_operation"
+    divisibility_check = "divisibility_check"
+    elementary_divisor_comparison = "elementary_divisor_comparison"
+    fourier_transform = "fourier_transform"
+    parity_check = "parity_check"
 
 
 class SurvivalStatus(ValueEnum):

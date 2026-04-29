@@ -161,6 +161,14 @@ python -m ihc_lab.cli export-reviewed-literature
 
 Reviewed exports go to `data/literature_queue/canonical_literature.candidates.json`.
 
+## Canonical Literature Rows
+
+Manually curated canonical literature mechanism anchors are stored separately from seed rows in `data/canonical_literature_rows.json`. They can be reported with:
+
+```powershell
+python -m ihc_lab.cli canonical-literature-report
+```
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:

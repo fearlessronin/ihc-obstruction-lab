@@ -88,3 +88,19 @@ The export writes `data/literature_queue/canonical_literature.candidates.json`.
 It never modifies `data/seed_rows.json` automatically.
 
 Default promotion keeps extracted rows as `llm_extracted_unverified` unless a controlled trust override is supplied. A `theorem_backed_literature` override requires reviewer notes, citation keys, and evidence snippets. Provider and manual outputs are not theorem verification.
+
+## Canonical Literature Rows
+
+Canonical literature rows live in `data/canonical_literature_rows.json`. They are manually curated mechanism anchors for literature coverage and atlas-building.
+
+They are separate from:
+
+- `data/seed_rows.json`, the hand-verified seed/calibration corpus used in the main experiments;
+- `data/generated_candidates.json`, formal generated proof targets;
+- `data/literature_queue/*.json`, the LLM/manual extraction and human-review workflow.
+
+Canonical literature rows are not merged into seed rows automatically. Rows marked `theorem_backed_literature` require citation keys and human review.
+
+```powershell
+python -m ihc_lab.cli canonical-literature-report
+```
