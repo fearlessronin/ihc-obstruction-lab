@@ -1,2 +1,96 @@
 # ihc-obstruction-lab
-A research codebase for representing, validating, and generating obstruction-channel records for the integral Hodge conjecture.
+
+`ihc-obstruction-lab` is a research codebase for representing, validating, and reporting machine-readable obstruction-channel records for the integral Hodge conjecture.
+
+It supports the paper project:
+
+> "Obstruction Channels and Generator Mechanisms for the Integral Hodge Conjecture."
+
+This repository does not prove new counterexamples automatically. It provides a reproducible schema, validation layer, and seed dataset for known and candidate obstruction mechanisms: local discriminant packages, shadow selectors, torsion trajectories, finite-coefficient cup-product Bockstein candidates, lattice-saturation records, nodal free-relation channels, and proof bottlenecks.
+
+## Installation
+
+Use Python 3.11 or newer.
+
+```powershell
+pip install -e ".[dev]"
+pytest
+```
+
+## Repository Layout
+
+```text
+src/ihc_lab/      Python package with data models, validation, dataset IO, and reports
+data/             Machine-readable seed rows plus schema notes
+docs/             Human-readable notes on channels and the seed dataset
+tests/            Pytest coverage for groups, shadows, cup products, validation, and seed rows
+notebooks/        Reserved for exploratory notebooks
+```
+
+## Obstruction Channels
+
+An obstruction channel is a structured record describing how a geometric or cohomological package may contribute to an integral Hodge obstruction workflow. A row records its trust level, computability level, active operations, survival status, obstruction status, citation keys, and any attached structured package such as a finite local discriminant group or finite-coefficient cup product candidate.
+
+The dataset intentionally distinguishes theorem-backed rows from generated candidates. Candidate rows must name their proof bottleneck; LLM-extracted rows must not be treated as theorem-backed data without independent verification.
+
+## Seed Dataset
+
+The initial seed dataset lives in `data/seed_rows.json`. It includes calibration rows for local discriminant packages, a Coble order-two shadow selector, nodal free-relation rows, a Benoist-Ottem benchmark row, a Diaz level-two finite-coefficient Bockstein row, and a level-three Coble-Diaz candidate row.
+
+The supplied citation keys are placeholders for verified bibliography work. Do not expand them into full citation metadata unless the bibliographic details have been checked.
+
+## Load Seed Rows
+
+```python
+from ihc_lab.datasets import load_seed_rows
+
+records = load_seed_rows()
+print(len(records))
+print(records[0].markdown_summary())
+```
+
+## Check Diaz Degree/Twist Validity
+
+```python
+from ihc_lab.datasets import load_seed_rows
+
+records = load_seed_rows()
+diaz = next(row for row in records if row.id == "diaz_level_two")
+candidate = diaz.cup_product_candidate
+
+assert candidate is not None
+print(candidate.total_degree())
+print(candidate.total_twist())
+print(candidate.is_degree_twist_valid())
+print(candidate.bockstein_target_string())
+```
+
+## Dataset Summary
+
+```python
+from ihc_lab.datasets import load_seed_rows
+from ihc_lab.reports import dataset_summary_markdown
+
+records = load_seed_rows()
+print(dataset_summary_markdown(records))
+```
+
+## Local/Remote Sync
+
+This repository is intended to be developed locally and kept in sync with GitHub:
+
+```powershell
+git pull --rebase origin main
+python -m pytest -q
+git add -A
+git commit -m "Describe the research-codebase change"
+git push origin main
+```
+
+Run tests before pushing changes that alter models, validation behavior, seed rows, or reports.
+
+## Development Notes
+
+The package favors explicit, readable data models over automated theorem inference. New validation rules should come with tests, and seed rows should stay close to cited or explicitly marked candidate mechanisms.
+
+Do not add machine-learning workflows, web crawlers, or unverified theorem extraction to this initial layer. The first goal is a reproducible schema and carefully labeled seed data.
