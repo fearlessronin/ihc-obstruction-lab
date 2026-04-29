@@ -28,4 +28,4 @@ Records how computationally explicit a row is, from metadata-only through symbol
 
 ## BottleneckLabel
 
-Names the proof or validation bottleneck, such as global transport survival, global relation rank, unramified nonvanishing, specialization bridge, or theorem-backed survival.
+Names the proof or validation bottleneck, such as global transport survival, global relation rank, unramified nonvanishing, specialization bridge, theorem-statement verification, or theorem-backed survival.

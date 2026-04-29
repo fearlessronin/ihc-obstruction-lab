@@ -18,11 +18,11 @@
     "survival_status": "unknown",
     "obstruction_status": "unknown",
     "computability_level": "level_3_theorem_import",
-    "bottleneck": "unknown",
+    "bottleneck": "verify_theorem_statement",
     "citation_keys": [
       "ColliotTheleneVoisin2012"
     ],
-    "comments": "Promoted from literature review queue. Original extraction_id: manual_sample_unramified. Reviewer notes: Sample accepted for review workflow demonstration only; not theorem-backed. Unmapped bottleneck label: verify_theorem_statement.",
+    "comments": "Promoted from literature review queue. Original extraction_id: manual_sample_unramified. Reviewer notes: Sample accepted for review workflow demonstration only; not theorem-backed.",
     "local_package": null,
     "shadow_selector": null,
     "torsion_trajectory": null,

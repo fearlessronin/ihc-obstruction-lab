@@ -112,4 +112,5 @@ class BottleneckLabel(ValueEnum):
     specialization_bridge = "specialization_bridge"
     degree_twist_invalid = "degree_twist_invalid"
     global_relation_rank = "global_relation_rank"
+    verify_theorem_statement = "verify_theorem_statement"
     unknown = "unknown"

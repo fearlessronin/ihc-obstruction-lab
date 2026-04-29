@@ -10,6 +10,7 @@ from ihc_lab.literature.promotion import (
     export_promoted_candidates,
     promote_reviewed_candidate,
     promote_reviewed_candidates,
+    safe_bottleneck,
 )
 
 
@@ -30,7 +31,7 @@ def _candidate(
         proposed_survival_status="unknown",
         proposed_obstruction_status="unknown",
         proposed_computability_level="level_3_theorem_import",
-        proposed_bottleneck="unknown",
+        proposed_bottleneck="verify_theorem_statement",
         proposed_citation_keys=["CitationKey"] if citation_keys is None else citation_keys,
         evidence_snippets=["sample evidence"] if evidence is None else evidence,
     )
@@ -53,6 +54,18 @@ def test_default_promotion_does_not_set_theorem_backed() -> None:
     promoted = promote_reviewed_candidate(_candidate())
 
     assert promoted.trust_level.value == "llm_extracted_unverified"
+
+
+def test_promotion_preserves_verify_theorem_statement_bottleneck() -> None:
+    promoted = promote_reviewed_candidate(_candidate())
+
+    assert promoted.bottleneck.value == "verify_theorem_statement"
+    assert "Unmapped bottleneck" not in (promoted.comments or "")
+
+
+def test_existing_bottleneck_mapping_still_works() -> None:
+    assert safe_bottleneck("lattice_identification").value == "lattice_identification"
+    assert safe_bottleneck("not_a_bottleneck").value == "unknown"
 
 
 def test_theorem_backed_override_fails_without_citation_keys() -> None:
