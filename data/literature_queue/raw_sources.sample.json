@@ -1,0 +1,30 @@
+[
+  {
+    "source_id": "colliot_theleme_voisin_2012_unramified",
+    "title": "Cohomologie non ramifiée et conjecture de Hodge entière",
+    "authors": ["Jean-Louis Colliot-Thélène", "Claire Voisin"],
+    "year": 2012,
+    "venue": null,
+    "abstract": null,
+    "url": null,
+    "arxiv_id": null,
+    "doi": null,
+    "bibtex_key": "ColliotTheleneVoisin2012",
+    "source_type": "paper",
+    "notes": "Mechanism anchor for Brauer/unramified degree-four channel."
+  },
+  {
+    "source_id": "aljovin_movasati_villaflor_2019_fermat",
+    "title": "Integral Hodge conjecture for Fermat varieties",
+    "authors": ["Enzo Aljovin", "Hossein Movasati", "Roberto Villaflor Loyola"],
+    "year": 2019,
+    "venue": null,
+    "abstract": null,
+    "url": null,
+    "arxiv_id": null,
+    "doi": null,
+    "bibtex_key": "AljovinMovasatiVillaflor2019",
+    "source_type": "paper",
+    "notes": "Computational lattice-saturation benchmark."
+  }
+]

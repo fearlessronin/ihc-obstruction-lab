@@ -119,6 +119,16 @@ Generated candidates are proof targets, not theorem-backed counterexamples. Prio
 
 See `docs/non_claims.md` for the concise release policy.
 
+## Literature Review Queue
+
+Phase 6A includes a scaffold for future LLM-assisted literature extraction. No LLM calls are made, no network access is used, and all extracted rows remain unverified until human review.
+
+```powershell
+python -m ihc_lab.cli literature-report
+```
+
+See `docs/literature_pipeline.md` for the queue workflow and promotion rules.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:

@@ -7,6 +7,8 @@ from pathlib import Path
 
 from ihc_lab.candidate_generator import generate_all_candidates
 from ihc_lab.datasets import load_seed_rows, save_seed_rows
+from ihc_lab.literature.reports import literature_queue_latex, literature_queue_markdown
+from ihc_lab.literature.review_queue import load_review_queue
 from ihc_lab.ranking import rank_candidates
 from ihc_lab.reports import (
     association_rules_latex,
@@ -72,6 +74,26 @@ def generate_reports(data_path: str | Path, output_dir: str | Path) -> list[Path
     return [candidate_output_path, *list(outputs)]
 
 
+def generate_literature_report(
+    raw_sources_path: str | Path,
+    extracted_rows_path: str | Path,
+    output_dir: str | Path,
+) -> list[Path]:
+    queue = load_review_queue(raw_sources_path, extracted_rows_path)
+    report_dir = Path(output_dir)
+    latex_dir = report_dir / "latex"
+    report_dir.mkdir(parents=True, exist_ok=True)
+    latex_dir.mkdir(parents=True, exist_ok=True)
+
+    outputs = {
+        report_dir / "literature_queue.md": literature_queue_markdown(queue),
+        latex_dir / "literature_queue.tex": literature_queue_latex(queue),
+    }
+    for path, content in outputs.items():
+        path.write_text(content + "\n", encoding="utf-8")
+    return list(outputs)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ihc-lab")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -79,6 +101,17 @@ def build_parser() -> argparse.ArgumentParser:
     generate = subparsers.add_parser("generate-reports")
     generate.add_argument("--data-path", default="data/seed_rows.json")
     generate.add_argument("--output-dir", default="reports")
+
+    literature = subparsers.add_parser("literature-report")
+    literature.add_argument(
+        "--raw-sources-path",
+        default="data/literature_queue/raw_sources.sample.json",
+    )
+    literature.add_argument(
+        "--extracted-rows-path",
+        default="data/literature_queue/extracted_rows.sample.json",
+    )
+    literature.add_argument("--output-dir", default="reports")
 
     return parser
 
@@ -89,6 +122,15 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "generate-reports":
         paths = generate_reports(args.data_path, args.output_dir)
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "literature-report":
+        paths = generate_literature_report(
+            args.raw_sources_path,
+            args.extracted_rows_path,
+            args.output_dir,
+        )
         for path in paths:
             print(path)
         return 0

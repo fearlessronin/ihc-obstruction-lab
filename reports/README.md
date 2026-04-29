@@ -10,5 +10,6 @@ Generated Markdown reports:
 - `feature_matrix.md`
 - `association_rules.md`
 - `candidate_generation.md`
+- `literature_queue.md`
 
 LaTeX table fragments are in `reports/latex/`.
