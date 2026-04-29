@@ -5,6 +5,8 @@ from ihc_lab.analytics.channel_distribution import (
     collect_atlas_records,
     legitimacy_tier,
     legitimacy_tier_summary,
+    theorem_backed_family_summary,
+    total_unique_families,
     unique_family_channel_summary,
     unique_family_tier_summary,
     unique_family_year_summary,
@@ -130,3 +132,21 @@ def test_unique_family_strict_only_theorem_backed() -> None:
 
     assert summary
     assert {row["tier"] for row in summary} == {LegitimacyTier.theorem_backed_obstruction}
+
+
+def test_total_unique_families_counts_current_atlas() -> None:
+    metadata = load_record_metadata()
+    records = collect_atlas_records()
+
+    assert total_unique_families(records, metadata) == 26
+    assert total_unique_families(records, metadata, strict=True) == 6
+
+
+def test_theorem_backed_family_summary_lists_expected_families() -> None:
+    metadata = load_record_metadata()
+    summary = theorem_backed_family_summary(collect_atlas_records(), metadata)
+    family_ids = {row["family_id"] for row in summary}
+
+    assert "atiyah_hirzebruch_torsion_operation" in family_ids
+    assert "diaz_level_two_bockstein" in family_ids
+    assert "coble_diaz_level_three_candidate" not in family_ids

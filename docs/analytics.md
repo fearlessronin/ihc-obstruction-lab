@@ -25,6 +25,12 @@ Use channel-level counts to see mechanism-channel coverage. Use unique-family co
 
 Both views are atlas-derived and incomplete with respect to the full literature.
 
+## Theorem-Backed Family Summary
+
+`reports/theorem_backed_family_summary.md` lists unique mechanism families whose tier is `theorem_backed_obstruction`.
+
+This report avoids double-counting multi-channel mechanisms and is atlas-derived, not complete with respect to the full literature.
+
 ## Strict vs Extended Counts
 
 Strict mode includes only theorem-backed obstruction rows.

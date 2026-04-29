@@ -283,3 +283,33 @@ def unique_family_channel_summary(
         }
         for item in sorted(families.values(), key=lambda row: row["family_id"])
     ]
+
+
+def total_unique_families(
+    records: list[ObstructionChannel],
+    metadata_map: dict[str, RecordAnalyticsMetadata],
+    strict: bool = False,
+) -> int:
+    family_ids: set[str] = set()
+    for record in records:
+        metadata = _metadata(record, metadata_map)
+        tier = legitimacy_tier(record, metadata)
+        if strict and tier != LegitimacyTier.theorem_backed_obstruction:
+            continue
+        family_ids.add(metadata.family_id)
+    return len(family_ids)
+
+
+def theorem_backed_family_summary(
+    records: list[ObstructionChannel],
+    metadata_map: dict[str, RecordAnalyticsMetadata],
+) -> list[dict]:
+    rows = unique_family_channel_summary(records, metadata_map, strict=True)
+    return sorted(
+        rows,
+        key=lambda row: (
+            row["publication_year"] is None,
+            row["publication_year"] or 0,
+            row["family_id"],
+        ),
+    )

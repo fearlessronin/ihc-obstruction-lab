@@ -11,6 +11,8 @@ from ihc_lab.analytics.channel_distribution import (
     channel_year_counts,
     collect_atlas_records,
     legitimacy_tier_summary,
+    theorem_backed_family_summary,
+    total_unique_families,
     unique_family_channel_summary,
     unique_family_tier_summary,
     unique_family_year_summary,
@@ -87,6 +89,8 @@ from ihc_lab.reports import (
     legitimacy_tier_summary_latex,
     legitimacy_tier_summary_markdown,
     seed_dataset_summary_latex,
+    theorem_backed_family_summary_latex,
+    theorem_backed_family_summary_markdown,
 )
 
 
@@ -330,6 +334,8 @@ def generate_analytics_report(
     family_tier_summary = unique_family_tier_summary(records, metadata, strict=strict)
     family_year_summary = unique_family_year_summary(records, metadata, strict=strict)
     family_channel_summary = unique_family_channel_summary(records, metadata, strict=strict)
+    total_families = total_unique_families(records, metadata, strict=strict)
+    theorem_families = theorem_backed_family_summary(records, metadata)
     report_dir = Path(output_dir)
     latex_dir = report_dir / "latex"
     figure_dir = report_dir / "figures"
@@ -345,7 +351,8 @@ def generate_analytics_report(
             tier_summary
         ),
         report_dir / "family_legitimacy_summary.md": family_legitimacy_summary_markdown(
-            family_tier_summary
+            family_tier_summary,
+            total_unique_families=total_families,
         ),
         report_dir / "family_year_summary.md": family_year_summary_markdown(
             family_year_summary
@@ -353,15 +360,24 @@ def generate_analytics_report(
         report_dir / "family_channel_summary.md": family_channel_summary_markdown(
             family_channel_summary
         ),
+        report_dir / "theorem_backed_family_summary.md": (
+            theorem_backed_family_summary_markdown(theorem_families)
+        ),
         latex_dir / "channel_summary.tex": channel_summary_latex(summary),
         latex_dir / "legitimacy_tier_summary.tex": legitimacy_tier_summary_latex(
             tier_summary
         ),
         latex_dir / "family_legitimacy_summary.tex": (
-            family_legitimacy_summary_latex(family_tier_summary)
+            family_legitimacy_summary_latex(
+                family_tier_summary,
+                total_unique_families=total_families,
+            )
         ),
         latex_dir / "family_year_summary.tex": family_year_summary_latex(
             family_year_summary
+        ),
+        latex_dir / "theorem_backed_family_summary.tex": (
+            theorem_backed_family_summary_latex(theorem_families)
         ),
     }
     for path, content in outputs.items():

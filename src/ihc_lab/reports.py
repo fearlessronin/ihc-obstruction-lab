@@ -382,13 +382,22 @@ def legitimacy_tier_summary_markdown(summary: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def family_legitimacy_summary_markdown(summary: list[dict]) -> str:
+def family_legitimacy_summary_markdown(
+    summary: list[dict], total_unique_families: int | None = None
+) -> str:
+    total = (
+        total_unique_families
+        if total_unique_families is not None
+        else sum(row["family_count"] for row in summary)
+    )
     lines = [
         "# Unique-Family Legitimacy Summary",
         "",
         "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
         "",
         "This report counts each `family_id` once per legitimacy tier, independent of how many channels the family occupies.",
+        "",
+        f"Total unique families: {total}",
         "",
         "| tier | family count |",
         "| --- | ---: |",
@@ -431,6 +440,32 @@ def family_channel_summary_markdown(summary: list[dict]) -> str:
             f"{row['family_id']} | "
             f"{year} | "
             f"{row['tier']} | "
+            f"{', '.join(row['channels'])} | "
+            f"{row['primary_reference'] or ''} | "
+            f"{row['representative_record_id']} |"
+        )
+    return "\n".join(lines)
+
+
+def theorem_backed_family_summary_markdown(rows: list[dict]) -> str:
+    lines = [
+        "# Theorem-Backed Obstruction Families",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "This report lists unique families whose legitimacy tier is `theorem_backed_obstruction`.",
+        "",
+        f"Total theorem-backed obstruction families: {len(rows)}",
+        "",
+        "| family_id | year | channels | primary reference | representative record |",
+        "| --- | ---: | --- | --- | --- |",
+    ]
+    for row in rows:
+        year = row["publication_year"] if row["publication_year"] is not None else "unknown"
+        lines.append(
+            "| "
+            f"{row['family_id']} | "
+            f"{year} | "
             f"{', '.join(row['channels'])} | "
             f"{row['primary_reference'] or ''} | "
             f"{row['representative_record_id']} |"
@@ -750,8 +785,17 @@ def legitimacy_tier_summary_latex(summary: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def family_legitimacy_summary_latex(summary: list[dict]) -> str:
+def family_legitimacy_summary_latex(
+    summary: list[dict], total_unique_families: int | None = None
+) -> str:
+    total = (
+        total_unique_families
+        if total_unique_families is not None
+        else sum(row["family_count"] for row in summary)
+    )
     lines = [
+        rf"\noindent\textbf{{Total unique families:}} {total}",
+        "",
         r"\begin{table}[h]",
         r"\centering",
         r"\caption{Unique-family legitimacy summary.}",
@@ -786,6 +830,31 @@ def family_year_summary_latex(summary: list[dict]) -> str:
         year = row["year"] if row["year"] is not None else "unknown"
         lines.append(
             f"{year} & {soft_break_identifier(row['tier'])} & {row['family_count']} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def theorem_backed_family_summary_latex(rows: list[dict]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Theorem-backed obstruction families in the encoded atlas.}",
+        r"\label{tab:theorem-backed-family-summary}",
+        r"\small",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.32\textwidth}|p{0.10\textwidth}|p{0.34\textwidth}|p{0.14\textwidth}|}",
+        r"\hline",
+        r"\centering\textbf{Family} & \centering\textbf{Year} & \centering\textbf{Channels} & \centering\arraybackslash\textbf{Reference} \\",
+        r"\hline",
+    ]
+    for row in rows:
+        year = row["publication_year"] if row["publication_year"] is not None else "unknown"
+        lines.append(
+            f"{soft_break_identifier(row['family_id'])} & "
+            f"{year} & "
+            f"{soft_break_identifier(', '.join(row['channels']))} & "
+            f"{soft_break_identifier(row['primary_reference'] or '')} \\\\"
         )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)

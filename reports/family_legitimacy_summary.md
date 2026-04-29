@@ -4,6 +4,8 @@ Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of 
 
 This report counts each `family_id` once per legitimacy tier, independent of how many channels the family occupies.
 
+Total unique families: 26
+
 | tier | family count |
 | --- | ---: |
 | boundary_or_calibration | 13 |

@@ -179,7 +179,7 @@ The analytics distinguish channel-level counts from unique-family counts to avoi
 python -m ihc_lab.cli analytics-report
 ```
 
-The command writes Markdown summaries, LaTeX tables, and PNG figures under `reports/`.
+The command writes Markdown summaries, LaTeX tables, and PNG figures under `reports/`, including `reports/theorem_backed_family_summary.md`.
 
 ## Local/Remote Sync
 

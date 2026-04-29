@@ -23,10 +23,11 @@ Generated Markdown reports:
 - `family_legitimacy_summary.md`
 - `family_year_summary.md`
 - `family_channel_summary.md`
+- `theorem_backed_family_summary.md`
 
 LaTeX table fragments are in `reports/latex/`.
 Canonical literature LaTeX output: `reports/latex/canonical_literature_table.tex`.
-Analytics LaTeX outputs include `reports/latex/family_legitimacy_summary.tex` and `reports/latex/family_year_summary.tex`.
+Analytics LaTeX outputs include `reports/latex/family_legitimacy_summary.tex`, `reports/latex/family_year_summary.tex`, and `reports/latex/theorem_backed_family_summary.tex`.
 
 Analytics figures:
 
