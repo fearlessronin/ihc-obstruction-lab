@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import Counter
 
 from ihc_lab.literature.extraction_schema import ExtractionStatus
+from ihc_lab.literature.packet_builder import ExtractionPacket
 from ihc_lab.literature.review_queue import ReviewQueue
 
 
@@ -79,4 +80,28 @@ def literature_queue_latex(queue: ReviewQueue) -> str:
             f"{_soft_break(candidate.review_status)} \\\\"
         )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def literature_packets_markdown(packets: list[ExtractionPacket]) -> str:
+    unique_sources = {packet.source_id for packet in packets}
+    lines = [
+        "# Literature Extraction Packets",
+        "",
+        f"Packet count: {len(packets)}",
+        f"Unique source count: {len(unique_sources)}",
+        "",
+        "| packet_id | source_id | channel hints | operation hints | bottleneck hints | matched keywords |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for packet in packets:
+        lines.append(
+            "| "
+            f"{packet.packet_id} | "
+            f"{packet.source_id} | "
+            f"{', '.join(packet.channel_hints)} | "
+            f"{', '.join(packet.operation_hints)} | "
+            f"{', '.join(packet.bottleneck_hints)} | "
+            f"{', '.join(packet.matched_keywords)} |"
+        )
     return "\n".join(lines)

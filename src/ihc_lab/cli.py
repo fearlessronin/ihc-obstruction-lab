@@ -7,8 +7,15 @@ from pathlib import Path
 
 from ihc_lab.candidate_generator import generate_all_candidates
 from ihc_lab.datasets import load_seed_rows, save_seed_rows
-from ihc_lab.literature.reports import literature_queue_latex, literature_queue_markdown
+from ihc_lab.literature.ingestion import load_excerpt_txt
+from ihc_lab.literature.packet_builder import build_packets, save_packets_json
+from ihc_lab.literature.reports import (
+    literature_packets_markdown,
+    literature_queue_latex,
+    literature_queue_markdown,
+)
 from ihc_lab.literature.review_queue import load_review_queue
+from ihc_lab.literature.sources import load_literature_sources
 from ihc_lab.ranking import rank_candidates
 from ihc_lab.reports import (
     association_rules_latex,
@@ -94,6 +101,40 @@ def generate_literature_report(
     return list(outputs)
 
 
+def _source_id_for_sample_excerpt(path: Path) -> str:
+    sample_mapping = {
+        "sample_colliot_theleme_voisin_excerpt": "colliot_theleme_voisin_2012_unramified",
+        "sample_fermat_computation_excerpt": "aljovin_movasati_villaflor_2019_fermat",
+    }
+    return sample_mapping.get(path.stem, path.stem)
+
+
+def build_literature_packets(
+    sources_path: str | Path,
+    excerpts_dir: str | Path,
+    output_path: str | Path,
+    report_path: str | Path,
+) -> list[Path]:
+    sources = load_literature_sources(sources_path)
+    excerpt_paths = sorted(Path(excerpts_dir).glob("*.txt"))
+    excerpts = [
+        load_excerpt_txt(
+            path,
+            source_id=_source_id_for_sample_excerpt(path),
+            section_label="sample excerpt",
+            notes="Local sample excerpt for packet generation.",
+        )
+        for path in excerpt_paths
+    ]
+    packets = build_packets(sources, excerpts)
+    save_packets_json(packets, output_path)
+
+    report = Path(report_path)
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(literature_packets_markdown(packets) + "\n", encoding="utf-8")
+    return [Path(output_path), report]
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ihc-lab")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -113,6 +154,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     literature.add_argument("--output-dir", default="reports")
 
+    packets = subparsers.add_parser("build-literature-packets")
+    packets.add_argument("--sources", default="data/literature_queue/raw_sources.sample.json")
+    packets.add_argument("--excerpts-dir", default="data/literature_queue/excerpts")
+    packets.add_argument("--output", default="data/literature_queue/packets.sample.json")
+    packets.add_argument("--report", default="reports/literature_packets.md")
+
     return parser
 
 
@@ -130,6 +177,16 @@ def main(argv: list[str] | None = None) -> int:
             args.raw_sources_path,
             args.extracted_rows_path,
             args.output_dir,
+        )
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "build-literature-packets":
+        paths = build_literature_packets(
+            args.sources,
+            args.excerpts_dir,
+            args.output,
+            args.report,
         )
         for path in paths:
             print(path)

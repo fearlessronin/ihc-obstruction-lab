@@ -127,6 +127,14 @@ Phase 6A includes a scaffold for future LLM-assisted literature extraction. No L
 python -m ihc_lab.cli literature-report
 ```
 
+Local packet generation for future manual/LLM extraction also runs without external calls:
+
+```powershell
+python -m ihc_lab.cli build-literature-packets
+```
+
+Keyword hints in packets are not verified labels.
+
 See `docs/literature_pipeline.md` for the queue workflow and promotion rules.
 
 ## Local/Remote Sync

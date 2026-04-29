@@ -1,0 +1,3 @@
+Sample excerpt for the local literature pipeline.
+
+This paraphrased note mentions unramified cohomology in relation to the degree-four integral Hodge conjecture. It flags residue conditions and a Brauer/unramified comparison as possible extraction cues. The text is only a short local fixture for packet generation and is not a theorem statement or full paper excerpt.

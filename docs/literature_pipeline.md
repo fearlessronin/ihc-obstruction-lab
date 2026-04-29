@@ -34,3 +34,20 @@ and writes:
 ## Non-Claims
 
 LLM extraction is not theorem verification. LLM rows are not primary claims. Human review is required before theorem-backed status.
+
+## Phase 6B: Local Excerpt Packets
+
+Local excerpts are short manually supplied text snippets. They are not full papers, not theorem verification, and not external data claims.
+
+Keyword hints are non-binding cues. They are not verified labels and should not be promoted directly into seed rows.
+
+Extraction packets are inputs for future LLM or manual extraction. Phase 6B makes no LLM calls and no web calls.
+
+```powershell
+python -m ihc_lab.cli build-literature-packets
+```
+
+This writes:
+
+- `data/literature_queue/packets.sample.json`
+- `reports/literature_packets.md`
