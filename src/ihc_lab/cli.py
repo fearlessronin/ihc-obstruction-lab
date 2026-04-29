@@ -6,6 +6,18 @@ import argparse
 import json
 from pathlib import Path
 
+from ihc_lab.analytics.channel_distribution import (
+    channel_summary,
+    channel_year_counts,
+    collect_atlas_records,
+    legitimacy_tier_summary,
+)
+from ihc_lab.analytics.metadata import load_record_metadata
+from ihc_lab.analytics.plotting import (
+    plot_channel_cumulative_growth,
+    plot_channel_legitimacy_tiers,
+    plot_channel_year_stacked_bar,
+)
 from ihc_lab.candidate_generator import generate_all_candidates
 from ihc_lab.datasets import (
     load_canonical_literature_rows,
@@ -50,6 +62,9 @@ from ihc_lab.reports import (
     candidate_generation_markdown,
     canonical_literature_table_latex,
     canonical_literature_table_markdown,
+    channel_summary_latex,
+    channel_summary_markdown,
+    channel_year_distribution_markdown,
     channel_table_latex,
     channel_table_markdown,
     classifier_report_latex,
@@ -60,6 +75,8 @@ from ihc_lab.reports import (
     dataset_summary_markdown,
     feature_matrix_markdown,
     feature_summary_latex,
+    legitimacy_tier_summary_latex,
+    legitimacy_tier_summary_markdown,
     seed_dataset_summary_latex,
 )
 
@@ -288,6 +305,56 @@ def export_reviewed_literature(
     return [Path(output_path), report]
 
 
+def generate_analytics_report(
+    count_mode: str = "family",
+    strict: bool = False,
+    include_promoted: bool = False,
+    metadata_path: str | Path = "data/analytics/record_metadata.json",
+    figures: bool = True,
+    output_dir: str | Path = "reports",
+) -> list[Path]:
+    records = collect_atlas_records(include_promoted=include_promoted)
+    metadata = load_record_metadata(metadata_path)
+    counts = channel_year_counts(records, metadata, count_mode=count_mode, strict=strict)
+    summary = channel_summary(records, metadata, count_mode=count_mode)
+    tier_summary = legitimacy_tier_summary(records, metadata, count_mode=count_mode)
+    report_dir = Path(output_dir)
+    latex_dir = report_dir / "latex"
+    figure_dir = report_dir / "figures"
+    report_dir.mkdir(parents=True, exist_ok=True)
+    latex_dir.mkdir(parents=True, exist_ok=True)
+
+    outputs = {
+        report_dir / "channel_year_distribution.md": channel_year_distribution_markdown(
+            counts
+        ),
+        report_dir / "channel_summary.md": channel_summary_markdown(summary),
+        report_dir / "legitimacy_tier_summary.md": legitimacy_tier_summary_markdown(
+            tier_summary
+        ),
+        latex_dir / "channel_summary.tex": channel_summary_latex(summary),
+        latex_dir / "legitimacy_tier_summary.tex": legitimacy_tier_summary_latex(
+            tier_summary
+        ),
+    }
+    for path, content in outputs.items():
+        path.write_text(content + "\n", encoding="utf-8")
+
+    paths = list(outputs)
+    if figures:
+        figure_dir.mkdir(parents=True, exist_ok=True)
+        figure_paths = [
+            figure_dir / "channel_year_stacked_bar.png",
+            figure_dir / "channel_cumulative_growth.png",
+            figure_dir / "channel_legitimacy_tiers.png",
+        ]
+        plot_channel_year_stacked_bar(counts, figure_paths[0])
+        plot_channel_cumulative_growth(counts, figure_paths[1])
+        plot_channel_legitimacy_tiers(tier_summary, figure_paths[2])
+        paths.extend(figure_paths)
+    return paths
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ihc-lab")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -344,6 +411,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     export.add_argument("--report", default="reports/promoted_literature_candidates.md")
     export.add_argument("--trust-overrides")
+
+    analytics = subparsers.add_parser("analytics-report")
+    analytics.add_argument("--count-mode", choices=["row", "family"], default="family")
+    analytics.add_argument("--strict", action="store_true")
+    analytics.add_argument("--include-promoted", action="store_true")
+    analytics.add_argument("--metadata", default="data/analytics/record_metadata.json")
+    analytics.add_argument("--figures", dest="figures", action="store_true", default=True)
+    analytics.add_argument("--no-figures", dest="figures", action="store_false")
+    analytics.add_argument("--output-dir", default="reports")
 
     return parser
 
@@ -414,6 +490,18 @@ def main(argv: list[str] | None = None) -> int:
             args.output,
             args.report,
             args.trust_overrides,
+        )
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "analytics-report":
+        paths = generate_analytics_report(
+            count_mode=args.count_mode,
+            strict=args.strict,
+            include_promoted=args.include_promoted,
+            metadata_path=args.metadata,
+            figures=args.figures,
+            output_dir=args.output_dir,
         )
         for path in paths:
             print(path)

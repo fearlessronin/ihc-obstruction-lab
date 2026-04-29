@@ -321,6 +321,67 @@ def canonical_literature_table_markdown(records: list[ObstructionChannel]) -> st
     return "\n".join(lines)
 
 
+def channel_year_distribution_markdown(counts: list[dict]) -> str:
+    lines = [
+        "# Channel-Year Distribution",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "| year | channel | tier | count | count mode |",
+        "| --- | --- | --- | ---: | --- |",
+    ]
+    for row in counts:
+        year = row["year"] if row["year"] is not None else "unknown"
+        lines.append(
+            "| "
+            f"{year} | "
+            f"{row['channel']} | "
+            f"{row['tier']} | "
+            f"{row['count']} | "
+            f"{row['count_mode']} |"
+        )
+    return "\n".join(lines)
+
+
+def channel_summary_markdown(summary: list[dict]) -> str:
+    lines = [
+        "# Channel Summary",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "| channel | first year | last year | theorem-backed obstructions | computed benchmarks | boundary/calibration | generated candidates | unverified extracted | total |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in summary:
+        lines.append(
+            "| "
+            f"{row['channel']} | "
+            f"{row['first_year'] or 'unknown'} | "
+            f"{row['last_year'] or 'unknown'} | "
+            f"{row['theorem_backed_obstruction_count']} | "
+            f"{row['computed_benchmark_count']} | "
+            f"{row['boundary_or_calibration_count']} | "
+            f"{row['generated_candidate_count']} | "
+            f"{row['unverified_extracted_count']} | "
+            f"{row['total_count']} |"
+        )
+    return "\n".join(lines)
+
+
+def legitimacy_tier_summary_markdown(summary: list[dict]) -> str:
+    lines = [
+        "# Legitimacy Tier Summary",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "| tier | count |",
+        "| --- | ---: |",
+    ]
+    for row in summary:
+        lines.append(f"| {row['tier']} | {row['count']} |")
+    return "\n".join(lines)
+
+
 def latex_escape_text(s: str) -> str:
     if "$" in s or "\\" in s:
         return s
@@ -583,6 +644,52 @@ def canonical_literature_table_latex(records: list[ObstructionChannel]) -> str:
             f"{soft_break_identifier(record.obstruction_status.value)} & "
             f"{soft_break_identifier(', '.join(record.citation_keys))} \\\\"
         )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def channel_summary_latex(summary: list[dict]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Atlas-derived channel summary by legitimacy tier.}",
+        r"\label{tab:channel-summary-analytics}",
+        r"\footnotesize",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.24\textwidth}|p{0.10\textwidth}|p{0.10\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.10\textwidth}|}",
+        r"\hline",
+        r"Channel & First & Last & Thm. & Computed & Boundary & Total \\",
+        r"\hline",
+    ]
+    for row in summary:
+        lines.append(
+            f"{soft_break_identifier(row['channel'])} & "
+            f"{row['first_year'] or 'unknown'} & "
+            f"{row['last_year'] or 'unknown'} & "
+            f"{row['theorem_backed_obstruction_count']} & "
+            f"{row['computed_benchmark_count']} & "
+            f"{row['boundary_or_calibration_count']} & "
+            f"{row['total_count']} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def legitimacy_tier_summary_latex(summary: list[dict]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Atlas-derived legitimacy tier summary.}",
+        r"\label{tab:legitimacy-tier-summary}",
+        r"\footnotesize",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.55\textwidth}|p{0.18\textwidth}|}",
+        r"\hline",
+        r"Tier & Count \\",
+        r"\hline",
+    ]
+    for row in summary:
+        lines.append(f"{soft_break_identifier(row['tier'])} & {row['count']} \\\\")
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)
 

@@ -13,6 +13,8 @@ Repository datasets using this row shape include:
 - `data/literature_queue/*.json`: LLM/manual extraction, review, and controlled promotion workflow.
 - `data/canonical_literature_rows.json`: manually curated canonical literature mechanism anchors.
 
+Analytics metadata is stored separately in `data/analytics/record_metadata.json`. This overlay adds publication years, references, family identifiers, and count flags without changing `data/seed_rows.json`.
+
 ## LocalPackage
 
 Stores local singularity package data such as singularity type, dimension, finite local group, optional discriminant/link/lattice data, prime support, computability level, and comments.

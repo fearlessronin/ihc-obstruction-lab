@@ -1,0 +1,282 @@
+{
+  "a1_surface_local_discriminant": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "local_discriminant_ADE_surface_seed",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Seed calibration row."
+  },
+  "ak_surface_local_discriminant_template": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "local_discriminant_Ak_template",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Metadata/template calibration row."
+  },
+  "d4_surface_local_discriminant": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "local_discriminant_D4_surface_seed",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Seed calibration row."
+  },
+  "e8_surface_unimodular_boundary": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "unimodular_boundary_E8_seed",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Unimodular boundary calibration row."
+  },
+  "coble_one_four_shadow": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "coble_shadow_selection_seed",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": true,
+    "notes": "Order-two shadow seed row."
+  },
+  "brieskorn_x2_y3_z11_local_discriminant": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "brieskorn_z5_local_discriminant_seed",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": true,
+    "notes": "Local discriminant seed row."
+  },
+  "threefold_ordinary_double_point_free_relation": {
+    "publication_year": 1986,
+    "primary_reference": "Friedman1986",
+    "family_id": "nodal_free_relation_threefold_odp",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Nodal free-relation calibration row."
+  },
+  "nodal_threefold_free_relation": {
+    "publication_year": 1986,
+    "primary_reference": "Friedman1986",
+    "family_id": "nodal_free_relation_threefold_family",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Nodal free-relation calibration row."
+  },
+  "nodal_quintic_free_relation": {
+    "publication_year": 1986,
+    "primary_reference": "Friedman1986",
+    "family_id": "nodal_free_relation_quintic_family",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Nodal free-relation calibration row."
+  },
+  "benoist_ottem_benchmark": {
+    "publication_year": 2020,
+    "primary_reference": "BenoistOttem2020",
+    "family_id": "benoist_ottem_enriques_torsion",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Theorem-backed benchmark row."
+  },
+  "diaz_level_two": {
+    "publication_year": 2023,
+    "primary_reference": "Diaz2023",
+    "family_id": "diaz_level_two_bockstein",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Theorem-backed level-two Bockstein row."
+  },
+  "level_three_coble_diaz_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanDiazKummer2026",
+    "family_id": "coble_diaz_level_three_candidate",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Formal candidate seed row."
+  },
+  "atiyah_hirzebruch_torsion_operation_anchor": {
+    "publication_year": 1962,
+    "primary_reference": "AtiyahHirzebruch1962",
+    "family_id": "atiyah_hirzebruch_torsion_operation",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Canonical literature mechanism anchor."
+  },
+  "kollar_divisibility_anchor": {
+    "publication_year": 1992,
+    "primary_reference": "Kollar1992",
+    "family_id": "kollar_divisibility",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Canonical literature mechanism anchor."
+  },
+  "colliot_theleme_voisin_brauer_unramified_anchor": {
+    "publication_year": 2012,
+    "primary_reference": "ColliotTheleneVoisin2012",
+    "family_id": "colliot_theleme_voisin_brauer_unramified",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Canonical Brauer/unramified mechanism anchor."
+  },
+  "voisin_positive_boundary_anchor": {
+    "publication_year": 2006,
+    "primary_reference": "Voisin2006",
+    "family_id": "voisin_positive_boundary",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Canonical positive/boundary anchor."
+  },
+  "totaro_positive_boundary_anchor": {
+    "publication_year": 2020,
+    "primary_reference": "Totaro2020",
+    "family_id": "totaro_positive_boundary",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Canonical positive/boundary anchor."
+  },
+  "aljovin_movasati_villaflor_fermat_lattice_anchor": {
+    "publication_year": 2019,
+    "primary_reference": "AljovinMovasatiVillaflor2019",
+    "family_id": "aljovin_movasati_villaflor_fermat_lattice",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Computed benchmark anchor."
+  },
+  "beckmann_de_gaay_fortman_abelian_fourier_anchor": {
+    "publication_year": 2023,
+    "primary_reference": "BeckmannDeGaayFortman2023",
+    "family_id": "beckmann_de_gaay_fortman_abelian_fourier",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Canonical abelian-variety Fourier-transform anchor."
+  },
+  "engel_de_gaay_fortman_schreieder_matroidal_parity_anchor": {
+    "publication_year": 2025,
+    "primary_reference": "EngelDeGaayFortmanSchreieder2025",
+    "family_id": "engel_de_gaay_fortman_schreieder_matroidal_parity",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Canonical matroidal/parity mechanism anchor."
+  },
+  "perry_categorical_ihc_anchor": {
+    "publication_year": 2022,
+    "primary_reference": "Perry2022CY2IHC",
+    "family_id": "perry_categorical_ihc",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": false,
+    "count_as_boundary": true,
+    "notes": "Canonical categorical IHC anchor."
+  },
+  "diaz_level_2_generated_or_reference": {
+    "publication_year": 2023,
+    "primary_reference": "Diaz2023",
+    "family_id": "diaz_level_two_bockstein",
+    "is_primary_family_anchor": false,
+    "count_as_obstruction": true,
+    "count_as_candidate": false,
+    "count_as_boundary": false,
+    "notes": "Generated reference duplicate of the Diaz level-two family."
+  },
+  "coble_diaz_level_3_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanDiazKummer2026",
+    "family_id": "coble_diaz_level_three_candidate",
+    "is_primary_family_anchor": false,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Generated formal candidate."
+  },
+  "coble_diaz_level_4_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanDiazKummer2026",
+    "family_id": "coble_diaz_level_four_candidate",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Generated formal candidate."
+  },
+  "coble_diaz_level_5_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanDiazKummer2026",
+    "family_id": "coble_diaz_level_five_candidate",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Generated formal candidate."
+  },
+  "a1_surface_local_discriminant_z2_shadow_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "a1_surface_shadow_candidate",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Generated local shadow candidate."
+  },
+  "d4_surface_local_discriminant_z2_shadow_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "d4_surface_shadow_candidate",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Generated local shadow candidate."
+  },
+  "brieskorn_x2_y3_z11_local_discriminant_mod5_shadow_candidate": {
+    "publication_year": 2026,
+    "primary_reference": "RahmanTorsionTrajectories2026",
+    "family_id": "brieskorn_mod5_shadow_candidate",
+    "is_primary_family_anchor": true,
+    "count_as_obstruction": false,
+    "count_as_candidate": true,
+    "count_as_boundary": false,
+    "notes": "Generated local shadow candidate."
+  }
+}

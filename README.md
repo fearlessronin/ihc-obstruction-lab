@@ -169,6 +169,16 @@ Manually curated canonical literature mechanism anchors are stored separately fr
 python -m ihc_lab.cli canonical-literature-report
 ```
 
+## Analytics Reports
+
+Temporal channel-distribution analytics use `data/analytics/record_metadata.json` as an overlay, leaving `data/seed_rows.json` unchanged. Counts are atlas-derived encoded-corpus counts, not complete literature counts.
+
+```powershell
+python -m ihc_lab.cli analytics-report
+```
+
+The command writes Markdown summaries, LaTeX tables, and PNG figures under `reports/`.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:
