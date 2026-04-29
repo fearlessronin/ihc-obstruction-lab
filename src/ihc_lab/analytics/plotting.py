@@ -88,3 +88,20 @@ def plot_channel_legitimacy_tiers(tier_summary: list[dict], output_path: str | P
     fig.tight_layout()
     fig.savefig(output)
     plt.close(fig)
+
+
+def plot_family_legitimacy_tiers(summary: list[dict], output_path: str | Path) -> None:
+    plt = _pyplot()
+    tiers = [row["tier"] for row in summary]
+    counts = [row["family_count"] for row in summary]
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    ax.bar(tiers, counts)
+    ax.set_title("Unique mechanism families by legitimacy tier")
+    ax.set_xlabel("Legitimacy tier")
+    ax.set_ylabel("Family count")
+    ax.tick_params(axis="x", rotation=35)
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fig.tight_layout()
+    fig.savefig(output)
+    plt.close(fig)

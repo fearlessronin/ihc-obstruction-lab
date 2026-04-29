@@ -5,6 +5,9 @@ from ihc_lab.analytics.channel_distribution import (
     collect_atlas_records,
     legitimacy_tier,
     legitimacy_tier_summary,
+    unique_family_channel_summary,
+    unique_family_tier_summary,
+    unique_family_year_summary,
 )
 from ihc_lab.analytics.metadata import load_record_metadata
 
@@ -70,3 +73,60 @@ def test_tier_summary_contains_theorem_and_generated() -> None:
 
     assert LegitimacyTier.theorem_backed_obstruction in tiers
     assert LegitimacyTier.generated_candidate in tiers
+
+
+def test_unique_family_tier_summary_returns_rows() -> None:
+    metadata = load_record_metadata()
+    summary = unique_family_tier_summary(collect_atlas_records(), metadata)
+
+    assert summary
+    assert {"tier", "family_count"} <= set(summary[0])
+
+
+def test_unique_family_tier_summary_deduplicates_diaz_family() -> None:
+    records = [
+        record
+        for record in collect_atlas_records()
+        if record.id in {"diaz_level_two", "diaz_level_2_generated_or_reference"}
+    ]
+    metadata = load_record_metadata()
+    summary = unique_family_tier_summary(records, metadata)
+
+    assert summary == [
+        {"tier": LegitimacyTier.theorem_backed_obstruction, "family_count": 1}
+    ]
+
+
+def test_unique_family_year_summary_returns_year_tier_and_family_count() -> None:
+    metadata = load_record_metadata()
+    summary = unique_family_year_summary(collect_atlas_records(), metadata)
+
+    assert summary
+    assert {"year", "tier", "family_count"} <= set(summary[0])
+
+
+def test_unique_family_channel_summary_unions_channels() -> None:
+    records = [
+        record
+        for record in collect_atlas_records()
+        if record.id in {"diaz_level_two", "diaz_level_2_generated_or_reference"}
+    ]
+    metadata = load_record_metadata()
+    summary = unique_family_channel_summary(records, metadata)
+
+    assert len(summary) == 1
+    assert summary[0]["family_id"] == "diaz_level_two_bockstein"
+    assert "cup_product_bockstein" in summary[0]["channels"]
+    assert "brauer_unramified" in summary[0]["channels"]
+
+
+def test_unique_family_strict_only_theorem_backed() -> None:
+    metadata = load_record_metadata()
+    summary = unique_family_tier_summary(
+        collect_atlas_records(),
+        metadata,
+        strict=True,
+    )
+
+    assert summary
+    assert {row["tier"] for row in summary} == {LegitimacyTier.theorem_backed_obstruction}

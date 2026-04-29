@@ -15,6 +15,16 @@ Analytics metadata lives in `data/analytics/record_metadata.json`. This overlay 
 
 Family mode is the default because several rows represent generated references, templates, or variants within a single mechanism family.
 
+## Channel Counts Versus Unique-Family Counts
+
+Channel-level reports count a family once for each channel it occupies. For example, a single multi-channel mechanism may contribute to several channel columns.
+
+Unique-family reports count each `family_id` once, independent of how many channels the family occupies.
+
+Use channel-level counts to see mechanism-channel coverage. Use unique-family counts to estimate how many distinct obstruction, boundary, benchmark, or candidate families are represented.
+
+Both views are atlas-derived and incomplete with respect to the full literature.
+
 ## Strict vs Extended Counts
 
 Strict mode includes only theorem-backed obstruction rows.

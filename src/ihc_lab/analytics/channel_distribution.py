@@ -17,6 +17,13 @@ from ihc_lab.analytics.metadata import (
 )
 
 CountMode = Literal["row", "family"]
+"""Count modes for channel-level analytics.
+
+``row`` counts every record-channel pair. ``family`` counts every distinct
+family-channel-tier combination. The latter is still a channel-distribution
+mode: one multi-channel family appears once in each channel it occupies.
+Unique-family analytics below count each family independently of channels.
+"""
 
 
 class LegitimacyTier:
@@ -181,4 +188,98 @@ def legitimacy_tier_summary(
     return [
         {"tier": tier, "count": count}
         for tier, count in sorted(by_tier.items())
+    ]
+
+
+def unique_family_tier_summary(
+    records: list[ObstructionChannel],
+    metadata_map: dict[str, RecordAnalyticsMetadata],
+    strict: bool = False,
+) -> list[dict]:
+    families: set[tuple[str, str]] = set()
+    for record in records:
+        metadata = _metadata(record, metadata_map)
+        tier = legitimacy_tier(record, metadata)
+        if strict and tier != LegitimacyTier.theorem_backed_obstruction:
+            continue
+        families.add((metadata.family_id, tier))
+    counts: defaultdict[str, int] = defaultdict(int)
+    for _, tier in families:
+        counts[tier] += 1
+    return [
+        {"tier": tier, "family_count": count}
+        for tier, count in sorted(counts.items())
+    ]
+
+
+def unique_family_year_summary(
+    records: list[ObstructionChannel],
+    metadata_map: dict[str, RecordAnalyticsMetadata],
+    strict: bool = False,
+) -> list[dict]:
+    families: set[tuple[str, int | None, str]] = set()
+    for record in records:
+        metadata = _metadata(record, metadata_map)
+        tier = legitimacy_tier(record, metadata)
+        if strict and tier != LegitimacyTier.theorem_backed_obstruction:
+            continue
+        families.add((metadata.family_id, metadata.publication_year, tier))
+    counts: defaultdict[tuple[int | None, str], int] = defaultdict(int)
+    for _, year, tier in families:
+        counts[(year, tier)] += 1
+    return [
+        {"year": year, "tier": tier, "family_count": count}
+        for (year, tier), count in sorted(
+            counts.items(),
+            key=lambda item: (
+                item[0][0] is None,
+                item[0][0] or 0,
+                item[0][1],
+            ),
+        )
+    ]
+
+
+def unique_family_channel_summary(
+    records: list[ObstructionChannel],
+    metadata_map: dict[str, RecordAnalyticsMetadata],
+    strict: bool = False,
+) -> list[dict]:
+    families: dict[str, dict] = {}
+    for record in records:
+        metadata = _metadata(record, metadata_map)
+        tier = legitimacy_tier(record, metadata)
+        if strict and tier != LegitimacyTier.theorem_backed_obstruction:
+            continue
+        current = families.setdefault(
+            metadata.family_id,
+            {
+                "family_id": metadata.family_id,
+                "primary_reference": metadata.primary_reference,
+                "publication_year": metadata.publication_year,
+                "tier": tier,
+                "channels": set(),
+                "representative_record_id": record.id,
+                "_has_primary_anchor": False,
+            },
+        )
+        current["channels"].update(label.value for label in record.channel_labels)
+        if metadata.primary_reference and not current["primary_reference"]:
+            current["primary_reference"] = metadata.primary_reference
+        if metadata.publication_year is not None and current["publication_year"] is None:
+            current["publication_year"] = metadata.publication_year
+        if metadata.is_primary_family_anchor and not current["_has_primary_anchor"]:
+            current["representative_record_id"] = record.id
+            current["_has_primary_anchor"] = True
+            current["tier"] = tier
+    return [
+        {
+            "family_id": item["family_id"],
+            "primary_reference": item["primary_reference"],
+            "publication_year": item["publication_year"],
+            "tier": item["tier"],
+            "channels": sorted(item["channels"]),
+            "representative_record_id": item["representative_record_id"],
+        }
+        for item in sorted(families.values(), key=lambda row: row["family_id"])
     ]

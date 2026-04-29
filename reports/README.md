@@ -20,12 +20,17 @@ Generated Markdown reports:
 - `channel_year_distribution.md`
 - `channel_summary.md`
 - `legitimacy_tier_summary.md`
+- `family_legitimacy_summary.md`
+- `family_year_summary.md`
+- `family_channel_summary.md`
 
 LaTeX table fragments are in `reports/latex/`.
 Canonical literature LaTeX output: `reports/latex/canonical_literature_table.tex`.
+Analytics LaTeX outputs include `reports/latex/family_legitimacy_summary.tex` and `reports/latex/family_year_summary.tex`.
 
 Analytics figures:
 
 - `reports/figures/channel_year_stacked_bar.png`
 - `reports/figures/channel_cumulative_growth.png`
 - `reports/figures/channel_legitimacy_tiers.png`
+- `reports/figures/family_legitimacy_tiers.png`

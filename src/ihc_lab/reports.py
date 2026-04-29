@@ -382,6 +382,62 @@ def legitimacy_tier_summary_markdown(summary: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def family_legitimacy_summary_markdown(summary: list[dict]) -> str:
+    lines = [
+        "# Unique-Family Legitimacy Summary",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "This report counts each `family_id` once per legitimacy tier, independent of how many channels the family occupies.",
+        "",
+        "| tier | family count |",
+        "| --- | ---: |",
+    ]
+    for row in summary:
+        lines.append(f"| {row['tier']} | {row['family_count']} |")
+    return "\n".join(lines)
+
+
+def family_year_summary_markdown(summary: list[dict]) -> str:
+    lines = [
+        "# Unique-Family Year Summary",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "This report counts unique mechanism families by publication year and legitimacy tier.",
+        "",
+        "| year | tier | family count |",
+        "| --- | --- | ---: |",
+    ]
+    for row in summary:
+        year = row["year"] if row["year"] is not None else "unknown"
+        lines.append(f"| {year} | {row['tier']} | {row['family_count']} |")
+    return "\n".join(lines)
+
+
+def family_channel_summary_markdown(summary: list[dict]) -> str:
+    lines = [
+        "# Unique-Family Channel Summary",
+        "",
+        "Warning: Counts are atlas-derived encoded-corpus counts, not complete counts of all known IHC counterexamples.",
+        "",
+        "| family_id | year | tier | channels | primary reference | representative record |",
+        "| --- | ---: | --- | --- | --- | --- |",
+    ]
+    for row in summary:
+        year = row["publication_year"] if row["publication_year"] is not None else "unknown"
+        lines.append(
+            "| "
+            f"{row['family_id']} | "
+            f"{year} | "
+            f"{row['tier']} | "
+            f"{', '.join(row['channels'])} | "
+            f"{row['primary_reference'] or ''} | "
+            f"{row['representative_record_id']} |"
+        )
+    return "\n".join(lines)
+
+
 def latex_escape_text(s: str) -> str:
     if "$" in s or "\\" in s:
         return s
@@ -690,6 +746,47 @@ def legitimacy_tier_summary_latex(summary: list[dict]) -> str:
     ]
     for row in summary:
         lines.append(f"{soft_break_identifier(row['tier'])} & {row['count']} \\\\")
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def family_legitimacy_summary_latex(summary: list[dict]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Unique-family legitimacy summary.}",
+        r"\label{tab:family-legitimacy-summary}",
+        r"\small",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.55\textwidth}|p{0.25\textwidth}|}",
+        r"\hline",
+        r"\centering\textbf{Tier} & \centering\arraybackslash\textbf{Family count} \\",
+        r"\hline",
+    ]
+    for row in summary:
+        lines.append(f"{soft_break_identifier(row['tier'])} & {row['family_count']} \\\\")
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def family_year_summary_latex(summary: list[dict]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Unique-family year summary.}",
+        r"\label{tab:family-year-summary}",
+        r"\small",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.18\textwidth}|p{0.52\textwidth}|p{0.18\textwidth}|}",
+        r"\hline",
+        r"\centering\textbf{Year} & \centering\textbf{Tier} & \centering\arraybackslash\textbf{Family count} \\",
+        r"\hline",
+    ]
+    for row in summary:
+        year = row["year"] if row["year"] is not None else "unknown"
+        lines.append(
+            f"{year} & {soft_break_identifier(row['tier'])} & {row['family_count']} \\\\"
+        )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)
 

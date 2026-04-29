@@ -173,6 +173,8 @@ python -m ihc_lab.cli canonical-literature-report
 
 Temporal channel-distribution analytics use `data/analytics/record_metadata.json` as an overlay, leaving `data/seed_rows.json` unchanged. Counts are atlas-derived encoded-corpus counts, not complete literature counts.
 
+The analytics distinguish channel-level counts from unique-family counts to avoid double-counting multi-channel mechanisms.
+
 ```powershell
 python -m ihc_lab.cli analytics-report
 ```
