@@ -18,9 +18,10 @@ Warning: Channel intents are triage hints, not verified labels.
 | lattice_saturation | 2 | aljovin_movasati_villaflor_2019_fermat, nikulin_integral_symmetric_forms |
 | local_discriminant | 9 | bbd_decomposition_theorem, dimca_sheaves_topology, goresky_macpherson_intersection_homology, goresky_siegel_l2_cohomology, jung_saito_mixed_hodge_modules, milnor_singular_points, nikulin_integral_symmetric_forms, rahman_integral_perverse_obstructions_2026, rahman_torsion_trajectories_2026 |
 | matroidal_parity | 2 | engel_de_gaay_fortman_schreieder_2025_matroidal, engel_de_gaay_fortman_schreieder_2025_survey |
-| motivic_realization | 7 | bbd_decomposition_theorem, dimca_sheaves_topology, goresky_macpherson_intersection_homology, jung_saito_mixed_hodge_modules, kashiwara_schapira_sheaves, perry_2022_cy2_ihc, rahman_integral_perverse_obstructions_2026 |
+| motivic_realization | 9 | bbd_decomposition_theorem, dimca_sheaves_topology, edidin_graham_1998_equivariant_intersection_theory, goresky_macpherson_intersection_homology, jung_saito_mixed_hodge_modules, kashiwara_schapira_sheaves, perry_2022_cy2_ihc, rahman_integral_perverse_obstructions_2026, vistoli_1989_intersection_theory_stacks |
 | nodal_free_relation | 1 | friedman_1986_nodal_threefolds |
 | shadow_selection | 1 | rahman_torsion_trajectories_2026 |
 | specialization_target | 1 | benoist_ottem_2020_enriques |
-| torsion_cohomology_operation | 1 | atiyah_hirzebruch_1962_torsion |
+| stacky_stabilizer | 3 | edidin_graham_1998_equivariant_intersection_theory, totaro_1999_chow_ring_classifying_space, vistoli_1989_intersection_theory_stacks |
+| torsion_cohomology_operation | 2 | atiyah_hirzebruch_1962_torsion, totaro_1999_chow_ring_classifying_space |
 | torsion_trajectory | 1 | rahman_torsion_trajectories_2026 |

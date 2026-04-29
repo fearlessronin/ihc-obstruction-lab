@@ -2,7 +2,7 @@
 
 Warning: This is a curated pilot source list for atlas expansion, not a complete bibliography.
 
-Total pilot sources: 25
+Total pilot sources: 28
 
 ## Counts by Pilot Group
 - `abelian_matroidal`: 3
@@ -12,11 +12,12 @@ Total pilot sources: 25
 - `enriques_coble_bockstein`: 3
 - `local_singularity_perverse`: 11
 - `positive_boundary`: 2
+- `stacky_finite_group`: 3
 - `unramified_brauer`: 2
 
 ## Counts by Priority
 - `1`: 11
-- `2`: 9
+- `2`: 12
 - `3`: 5
 
 | source_id | year | pilot group | intended channels | priority | bibtex key |
@@ -46,3 +47,6 @@ Total pilot sources: 25
 | dimca_sheaves_topology | 2004 | local_singularity_perverse | local_discriminant, motivic_realization | 3 | Dimca2004 |
 | kashiwara_schapira_sheaves | 1990 | local_singularity_perverse | motivic_realization | 3 | KashiwaraSchapira1990 |
 | perry_2022_cy2_ihc | 2022 | categorical_motivic | categorical_ihc, motivic_realization | 2 | Perry2022CY2IHC |
+| totaro_1999_chow_ring_classifying_space | 1999 | stacky_finite_group | stacky_stabilizer, torsion_cohomology_operation | 2 | Totaro1999ChowRingClassifyingSpace |
+| edidin_graham_1998_equivariant_intersection_theory | 1998 | stacky_finite_group | stacky_stabilizer, motivic_realization | 2 | EdidinGraham1998EquivariantIntersectionTheory |
+| vistoli_1989_intersection_theory_stacks | 1989 | stacky_finite_group | stacky_stabilizer, motivic_realization | 2 | Vistoli1989IntersectionTheoryStacks |

@@ -143,6 +143,8 @@ Pilot source metadata for atlas expansion can be summarized with:
 python -m ihc_lab.cli pilot-sources-report
 ```
 
+The pilot list includes stacky/finite-group metadata for future equivariant and stabilizer-channel discovery.
+
 ## Configurable LLM Extraction
 
 Phase 6C adds mock, manual, OpenAI-compatible, and Anthropic provider interfaces for local extraction packets. Mock mode is offline and is the default testing path:

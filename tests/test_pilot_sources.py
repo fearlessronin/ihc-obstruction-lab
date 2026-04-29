@@ -21,7 +21,7 @@ PILOT_CSV = "data/literature_queue/pilot_sources/pilot_sources.sample.csv"
 def test_load_pilot_sources_json_succeeds() -> None:
     sources = load_pilot_sources_json(PILOT_JSON)
 
-    assert len(sources) >= 20
+    assert len(sources) >= 28
 
 
 def test_source_ids_are_unique() -> None:
@@ -37,6 +37,17 @@ def test_expected_channel_hints_present() -> None:
 
     assert "brauer_unramified" in hints
     assert "lattice_saturation" in hints
+    assert "stacky_stabilizer" in hints
+
+
+def test_stacky_finite_group_coverage_present() -> None:
+    sources = load_pilot_sources_json(PILOT_JSON)
+
+    assert any(source.pilot_group == "stacky_finite_group" for source in sources)
+    assert any(
+        "stacky_realization" in source.intended_bottleneck_hints
+        for source in sources
+    )
 
 
 def test_pilot_source_round_trip_json_and_csv(tmp_path: Path) -> None:
@@ -59,7 +70,7 @@ def test_pilot_source_round_trip_json_and_csv(tmp_path: Path) -> None:
 def test_csv_load_works() -> None:
     sources = load_pilot_sources_csv(PILOT_CSV)
 
-    assert len(sources) >= 20
+    assert len(sources) >= 28
 
 
 def test_pilot_source_reports() -> None:

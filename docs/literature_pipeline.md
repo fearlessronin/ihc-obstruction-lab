@@ -111,6 +111,8 @@ Pilot source files live under `data/literature_queue/pilot_sources/`. They are c
 
 Channel hints and bottleneck hints are triage hints. They are not verified labels.
 
+The pilot list includes stacky/finite-group sources for future equivariant, stabilizer, and stack-to-coarse comparison channels.
+
 The pilot import workflow makes no web, API, or LLM calls:
 
 ```powershell
