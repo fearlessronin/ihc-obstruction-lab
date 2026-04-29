@@ -9,5 +9,5 @@ Candidate rows checked: 2
 
 ## LaTeX Summary
 
-- `diaz_level_two`: $H^3(-, \mathbb{Z}/2(2))$ $\xrightarrow{\beta}$ $H^4(-, \mathbb{Z}(2))$ (valid).
-- `level_three_coble_diaz_candidate`: $H^5(-, \mathbb{Z}/2(3))$ $\xrightarrow{\beta}$ $H^6(-, \mathbb{Z}(3))$ (valid).
+- `diaz_level_two`: $H^3(-,\mathbb{Z}/2(2))$ $\xrightarrow{\beta}$ $H^4(-,\mathbb{Z}(2))$ (valid).
+- `level_three_coble_diaz_candidate`: $H^5(-,\mathbb{Z}/2(3))$ $\xrightarrow{\beta}$ $H^6(-,\mathbb{Z}(3))$ (valid).

@@ -75,6 +75,16 @@ records = load_seed_rows()
 print(dataset_summary_markdown(records))
 ```
 
+## Generating Reports
+
+Markdown and LaTeX reports are generated deterministically from `data/seed_rows.json`:
+
+```powershell
+python -m ihc_lab.cli generate-reports
+```
+
+The command writes Markdown reports into `reports/` and LaTeX table fragments into `reports/latex/`. These outputs are intended to support the paper's Seed Dataset and Channel Calibration section.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:

@@ -1,0 +1,39 @@
+\begin{table}[h]
+\centering
+\caption{Rule-based classifier output for seed rows.}
+\label{tab:classifier-report}
+\footnotesize
+\begin{tabular}{|p{0.26\textwidth}|p{0.27\textwidth}|p{0.20\textwidth}|p{0.18\textwidth}|}
+\hline
+Record & Channel & Status & Bottleneck \\
+\hline
+a1\_\allowbreak{}surface\_\allowbreak{}local\_\allowbreak{}discriminant & local\_\allowbreak{}discriminant & calibration\_\allowbreak{}row & global\_\allowbreak{}transport\_\allowbreak{}survival \\
+ak\_\allowbreak{}surface\_\allowbreak{}local\_\allowbreak{}discriminant\_\allowbreak{}template & local\_\allowbreak{}discriminant & calibration\_\allowbreak{}row & global\_\allowbreak{}transport\_\allowbreak{}survival \\
+d4\_\allowbreak{}surface\_\allowbreak{}local\_\allowbreak{}discriminant & local\_\allowbreak{}discriminant & calibration\_\allowbreak{}row & global\_\allowbreak{}transport\_\allowbreak{}survival \\
+e8\_\allowbreak{}surface\_\allowbreak{}unimodular\_\allowbreak{}boundary & unimodular\_\allowbreak{}boundary & calibration & none \\
+coble\_\allowbreak{}one\_\allowbreak{}four\_\allowbreak{}shadow & local\_\allowbreak{}discriminant, shadow\_\allowbreak{}selection & calibration\_\allowbreak{}row & specialization\_\allowbreak{}bridge \\
+brieskorn\_\allowbreak{}x2\_\allowbreak{}y3\_\allowbreak{}z11\_\allowbreak{}local\_\allowbreak{}discriminant & local\_\allowbreak{}discriminant & calibration\_\allowbreak{}row & global\_\allowbreak{}transport\_\allowbreak{}survival \\
+threefold\_\allowbreak{}ordinary\_\allowbreak{}double\_\allowbreak{}point\_\allowbreak{}free\_\allowbreak{}relation & nodal\_\allowbreak{}free\_\allowbreak{}relation & calibration & global\_\allowbreak{}relation\_\allowbreak{}rank \\
+nodal\_\allowbreak{}threefold\_\allowbreak{}free\_\allowbreak{}relation & nodal\_\allowbreak{}free\_\allowbreak{}relation & calibration & global\_\allowbreak{}relation\_\allowbreak{}rank \\
+nodal\_\allowbreak{}quintic\_\allowbreak{}free\_\allowbreak{}relation & nodal\_\allowbreak{}free\_\allowbreak{}relation & calibration & global\_\allowbreak{}relation\_\allowbreak{}rank \\
+benoist\_\allowbreak{}ottem\_\allowbreak{}benchmark & global\_\allowbreak{}smooth\_\allowbreak{}torsion, enriques\_\allowbreak{}product, specialization\_\allowbreak{}target & theorem\_\allowbreak{}backed\_\allowbreak{}obstruction & none \\
+diaz\_\allowbreak{}level\_\allowbreak{}two & cup\_\allowbreak{}product\_\allowbreak{}bockstein, brauer\_\allowbreak{}unramified & theorem\_\allowbreak{}backed\_\allowbreak{}obstruction & survival\_\allowbreak{}proved\_\allowbreak{}in\_\allowbreak{}source \\
+level\_\allowbreak{}three\_\allowbreak{}coble\_\allowbreak{}diaz\_\allowbreak{}candidate & cup\_\allowbreak{}product\_\allowbreak{}bockstein & formal\_\allowbreak{}candidate\_\allowbreak{}survival\_\allowbreak{}needed & unramified\_\allowbreak{}nonvanishing \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item \texttt{a1\_\allowbreak{}surface\_\allowbreak{}local\_\allowbreak{}discriminant}: Uses a local package/discriminant channel. Finite local group is active: Z/2Z.
+\item \texttt{ak\_\allowbreak{}surface\_\allowbreak{}local\_\allowbreak{}discriminant\_\allowbreak{}template}: Uses a local package/discriminant channel. Local group is trivial, so the row is boundary/unimodular-like.
+\item \texttt{d4\_\allowbreak{}surface\_\allowbreak{}local\_\allowbreak{}discriminant}: Uses a local package/discriminant channel. Finite local group is active: Z/2Z ⊕ Z/2Z.
+\item \texttt{e8\_\allowbreak{}surface\_\allowbreak{}unimodular\_\allowbreak{}boundary}: Nontrivial local geometry can have trivial discriminant group in a unimodular boundary row.
+\item \texttt{coble\_\allowbreak{}one\_\allowbreak{}four\_\allowbreak{}shadow}: Uses a local package/discriminant channel. Finite local group is active: Z/4Z. Uses a selected subgroup/quotient/shadow channel. Validated Z/4 -> Z/2 order-two shadow selector.
+\item \texttt{brieskorn\_\allowbreak{}x2\_\allowbreak{}y3\_\allowbreak{}z11\_\allowbreak{}local\_\allowbreak{}discriminant}: Uses a local package/discriminant channel. Finite local group is active: Z/5Z.
+\item \texttt{threefold\_\allowbreak{}ordinary\_\allowbreak{}double\_\allowbreak{}point\_\allowbreak{}free\_\allowbreak{}relation}: Belongs to the free vanishing-cycle/global-relation channel, not surface-type finite local torsion.
+\item \texttt{nodal\_\allowbreak{}threefold\_\allowbreak{}free\_\allowbreak{}relation}: Belongs to the free vanishing-cycle/global-relation channel, not surface-type finite local torsion.
+\item \texttt{nodal\_\allowbreak{}quintic\_\allowbreak{}free\_\allowbreak{}relation}: Belongs to the free vanishing-cycle/global-relation channel, not surface-type finite local torsion.
+\item \texttt{benoist\_\allowbreak{}ottem\_\allowbreak{}benchmark}: Records a smooth global torsion benchmark. Uses a specialization/comparison role.
+\item \texttt{diaz\_\allowbreak{}level\_\allowbreak{}two}: Cup-product Bockstein candidate has valid degree/twist arithmetic. Bockstein target: H\textasciicircum{}4(-, Z(2)). Includes a Brauer/unramified survival station.
+\item \texttt{level\_\allowbreak{}three\_\allowbreak{}coble\_\allowbreak{}diaz\_\allowbreak{}candidate}: Cup-product Bockstein candidate has valid degree/twist arithmetic. Bockstein target: H\textasciicircum{}6(-, Z(3)).
+\end{itemize}
