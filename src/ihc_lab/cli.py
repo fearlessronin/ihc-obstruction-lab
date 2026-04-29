@@ -34,6 +34,14 @@ from ihc_lab.literature.extraction_schema import (
     load_extracted_candidates,
     save_extracted_candidates,
 )
+from ihc_lab.literature.discovery_dedupe import deduplicate_discovered_sources
+from ihc_lab.literature.discovery_import import (
+    discovered_to_literature_source,
+    load_discovered_sources,
+    save_discovered_sources,
+)
+from ihc_lab.literature.discovery_providers import create_discovery_provider
+from ihc_lab.literature.discovery_queries import load_discovery_queries
 from ihc_lab.literature.extract_with_llm import extract_candidates_from_packets
 from ihc_lab.literature.ingestion import load_excerpt_txt
 from ihc_lab.literature.llm_client import create_llm_client
@@ -54,6 +62,9 @@ from ihc_lab.literature.review_actions import (
 )
 from ihc_lab.literature.reports import (
     llm_extraction_report_markdown,
+    discovered_source_channel_hints_markdown,
+    literature_discovery_report_latex,
+    literature_discovery_report_markdown,
     literature_packets_markdown,
     literature_queue_latex,
     literature_queue_markdown,
@@ -366,6 +377,111 @@ def generate_pilot_sources_report(
     return outputs
 
 
+def discover_literature(
+    queries_path: str | Path,
+    provider_override: str | None,
+    allow_network: bool,
+    output_path: str | Path | None,
+    report_path: str | Path,
+    channel_report_path: str | Path,
+    latex_path: str | Path,
+    dedupe: bool,
+    merge_into_queue: bool,
+    queue_output: str | Path,
+) -> list[Path]:
+    queries = load_discovery_queries(queries_path)
+    discovered = []
+    for query in queries:
+        provider_name = provider_override or query.provider
+        provider = create_discovery_provider(provider_name, allow_network=allow_network)
+        discovered.extend(provider.search(query))
+
+    if dedupe:
+        unique_sources, duplicates = deduplicate_discovered_sources(discovered)
+    else:
+        unique_sources, duplicates = discovered, []
+
+    if output_path is None:
+        output_path = (
+            "data/literature_queue/discovery/discovered_sources.mock.json"
+            if (provider_override or "mock") == "mock"
+            else "data/literature_queue/discovery/discovered_sources.json"
+        )
+    output = Path(output_path)
+    report = Path(report_path)
+    channel_report = Path(channel_report_path)
+    latex = Path(latex_path)
+    save_discovered_sources(unique_sources, output)
+    report.parent.mkdir(parents=True, exist_ok=True)
+    channel_report.parent.mkdir(parents=True, exist_ok=True)
+    latex.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(
+        literature_discovery_report_markdown(unique_sources, duplicates) + "\n",
+        encoding="utf-8",
+    )
+    channel_report.write_text(
+        discovered_source_channel_hints_markdown(unique_sources) + "\n",
+        encoding="utf-8",
+    )
+    latex.write_text(
+        literature_discovery_report_latex(unique_sources) + "\n",
+        encoding="utf-8",
+    )
+    outputs = [output, report, channel_report, latex]
+
+    if merge_into_queue:
+        queue_path = Path("data/literature_queue/raw_sources.sample.json")
+        existing = load_literature_sources(queue_path) if queue_path.exists() else []
+        new_sources = [discovered_to_literature_source(source) for source in unique_sources]
+        merged = merge_sources(existing, new_sources)
+        save_literature_sources(merged, queue_output)
+        outputs.append(Path(queue_output))
+    return outputs
+
+
+def import_discovered_sources(
+    input_path: str | Path,
+    output_path: str | Path,
+    report_path: str | Path,
+    channel_report_path: str | Path,
+    latex_path: str | Path,
+    merge_into_queue: bool,
+    queue_output: str | Path,
+) -> list[Path]:
+    discovered = load_discovered_sources(input_path)
+    unique_sources, duplicates = deduplicate_discovered_sources(discovered)
+    output = Path(output_path)
+    report = Path(report_path)
+    channel_report = Path(channel_report_path)
+    latex = Path(latex_path)
+    save_discovered_sources(unique_sources, output)
+    report.parent.mkdir(parents=True, exist_ok=True)
+    channel_report.parent.mkdir(parents=True, exist_ok=True)
+    latex.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(
+        literature_discovery_report_markdown(unique_sources, duplicates) + "\n",
+        encoding="utf-8",
+    )
+    channel_report.write_text(
+        discovered_source_channel_hints_markdown(unique_sources) + "\n",
+        encoding="utf-8",
+    )
+    latex.write_text(
+        literature_discovery_report_latex(unique_sources) + "\n",
+        encoding="utf-8",
+    )
+    outputs = [output, report, channel_report, latex]
+
+    if merge_into_queue:
+        queue_path = Path("data/literature_queue/raw_sources.sample.json")
+        existing = load_literature_sources(queue_path) if queue_path.exists() else []
+        new_sources = [discovered_to_literature_source(source) for source in unique_sources]
+        merged = merge_sources(existing, new_sources)
+        save_literature_sources(merged, queue_output)
+        outputs.append(Path(queue_output))
+    return outputs
+
+
 def generate_analytics_report(
     count_mode: str = "family",
     strict: bool = False,
@@ -526,6 +642,52 @@ def build_parser() -> argparse.ArgumentParser:
     pilot.add_argument("--channel-report", default="reports/pilot_source_channel_intents.md")
     pilot.add_argument("--latex", default="reports/latex/pilot_sources_summary.tex")
 
+    discovery = subparsers.add_parser("discover-literature")
+    discovery.add_argument(
+        "--queries",
+        default="data/literature_queue/discovery/discovery_queries.sample.json",
+    )
+    discovery.add_argument("--provider", choices=["mock", "openalex", "crossref", "arxiv"])
+    discovery.add_argument("--allow-network", action="store_true")
+    discovery.add_argument("--output")
+    discovery.add_argument("--report", default="reports/literature_discovery_report.md")
+    discovery.add_argument(
+        "--channel-report",
+        default="reports/discovered_source_channel_hints.md",
+    )
+    discovery.add_argument("--latex", default="reports/latex/literature_discovery_report.tex")
+    discovery.add_argument("--dedupe", dest="dedupe", action="store_true", default=True)
+    discovery.add_argument("--no-dedupe", dest="dedupe", action="store_false")
+    discovery.add_argument("--merge-into-queue", action="store_true")
+    discovery.add_argument(
+        "--queue-output",
+        default="data/literature_queue/raw_sources.discovered.json",
+    )
+
+    import_discovered = subparsers.add_parser("import-discovered-sources")
+    import_discovered.add_argument(
+        "--input",
+        default="data/literature_queue/discovery/discovered_sources.manual.sample.json",
+    )
+    import_discovered.add_argument(
+        "--output",
+        default="data/literature_queue/discovery/discovered_sources.manual.json",
+    )
+    import_discovered.add_argument("--report", default="reports/literature_discovery_report.md")
+    import_discovered.add_argument(
+        "--channel-report",
+        default="reports/discovered_source_channel_hints.md",
+    )
+    import_discovered.add_argument(
+        "--latex",
+        default="reports/latex/literature_discovery_report.tex",
+    )
+    import_discovered.add_argument("--merge-into-queue", action="store_true")
+    import_discovered.add_argument(
+        "--queue-output",
+        default="data/literature_queue/raw_sources.discovered.json",
+    )
+
     return parser
 
 
@@ -620,6 +782,35 @@ def main(argv: list[str] | None = None) -> int:
             args.report,
             args.channel_report,
             args.latex,
+        )
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "discover-literature":
+        paths = discover_literature(
+            args.queries,
+            args.provider,
+            args.allow_network,
+            args.output,
+            args.report,
+            args.channel_report,
+            args.latex,
+            args.dedupe,
+            args.merge_into_queue,
+            args.queue_output,
+        )
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "import-discovered-sources":
+        paths = import_discovered_sources(
+            args.input,
+            args.output,
+            args.report,
+            args.channel_report,
+            args.latex,
+            args.merge_into_queue,
+            args.queue_output,
         )
         for path in paths:
             print(path)

@@ -145,6 +145,15 @@ python -m ihc_lab.cli pilot-sources-report
 
 The pilot list includes stacky/finite-group metadata for future equivariant and stabilizer-channel discovery.
 
+Literature discovery can poll or import source metadata without creating theorem-backed rows:
+
+```powershell
+python -m ihc_lab.cli discover-literature --provider mock
+python -m ihc_lab.cli import-discovered-sources --input data/literature_queue/discovery/discovered_sources.manual.sample.json
+```
+
+External discovery providers require `--allow-network`; discovered sources are metadata-only and unreviewed.
+
 ## Configurable LLM Extraction
 
 Phase 6C adds mock, manual, OpenAI-compatible, and Anthropic provider interfaces for local extraction packets. Mock mode is offline and is the default testing path:

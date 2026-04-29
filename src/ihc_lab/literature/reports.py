@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import Counter
 
 from ihc_lab.channels import ObstructionChannel
+from ihc_lab.literature.discovery_import import DiscoveredSource
 from ihc_lab.literature.extraction_schema import ExtractionStatus
 from ihc_lab.literature.extraction_schema import ExtractedChannelCandidate
 from ihc_lab.literature.packet_builder import ExtractionPacket
@@ -317,6 +318,108 @@ def pilot_sources_summary_latex(sources: list[PilotLiteratureSource]) -> str:
             f"{_soft_break(source.pilot_group)} & "
             f"{_soft_break(', '.join(source.intended_channel_hints))} & "
             f"{source.priority} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def literature_discovery_report_markdown(
+    discovered: list[DiscoveredSource],
+    duplicates: list[dict] | None = None,
+) -> str:
+    duplicates = duplicates or []
+    provider_counts = Counter(source.provider for source in discovered)
+    channel_counts = Counter(
+        hint for source in discovered for hint in source.intended_channel_hints
+    )
+    lines = [
+        "# Literature Discovery Report",
+        "",
+        "Warning: Discovered sources are metadata-only, unreviewed, and not theorem-backed rows.",
+        "",
+        f"Discovered source count: {len(discovered)}",
+        f"Duplicate count: {len(duplicates)}",
+        f"Unique source count: {len(discovered)}",
+        "",
+        "## Counts by Provider",
+    ]
+    for provider, count in sorted(provider_counts.items()):
+        lines.append(f"- `{provider}`: {count}")
+    lines.extend(["", "## Counts by Intended Channel Hints"])
+    for channel, count in sorted(channel_counts.items()):
+        lines.append(f"- `{channel}`: {count}")
+    lines.extend(
+        [
+            "",
+            "| source_id | year | title | provider | query_id | channel hints | status |",
+            "| --- | ---: | --- | --- | --- | --- | --- |",
+        ]
+    )
+    for source in discovered:
+        year = source.year if source.year is not None else "unknown"
+        lines.append(
+            "| "
+            f"{source.source_id} | "
+            f"{year} | "
+            f"{source.title} | "
+            f"{source.provider} | "
+            f"{source.query_id} | "
+            f"{', '.join(source.intended_channel_hints)} | "
+            f"{source.discovery_status} |"
+        )
+    if duplicates:
+        lines.extend(["", "## Duplicates", "", "| discovery_id | source_id | matched existing | reason |"])
+        lines.append("| --- | --- | --- | --- |")
+        for duplicate in duplicates:
+            lines.append(
+                "| "
+                f"{duplicate.get('discovery_id', '')} | "
+                f"{duplicate.get('source_id', '')} | "
+                f"{duplicate.get('matched_existing', '')} | "
+                f"{duplicate.get('reason', '')} |"
+            )
+    return "\n".join(lines)
+
+
+def discovered_source_channel_hints_markdown(discovered: list[DiscoveredSource]) -> str:
+    by_channel: dict[str, list[str]] = {}
+    for source in discovered:
+        for channel in source.intended_channel_hints:
+            by_channel.setdefault(channel, []).append(source.source_id)
+    lines = [
+        "# Discovered Source Channel Hints",
+        "",
+        "Warning: Channel hints are triage hints, not verified labels.",
+        "",
+        "| channel hint | source count | source ids |",
+        "| --- | ---: | --- |",
+    ]
+    for channel, source_ids in sorted(by_channel.items()):
+        lines.append(f"| {channel} | {len(source_ids)} | {', '.join(sorted(source_ids))} |")
+    return "\n".join(lines)
+
+
+def literature_discovery_report_latex(discovered: list[DiscoveredSource]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Discovered literature sources for review.}",
+        r"\label{tab:literature-discovery-sources}",
+        r"\footnotesize",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.28\textwidth}|p{0.10\textwidth}|p{0.28\textwidth}|p{0.20\textwidth}|}",
+        r"\hline",
+        r"\centering\textbf{Source} & \centering\textbf{Year} & \centering\textbf{Provider/query} & \centering\arraybackslash\textbf{Channel hints} \\",
+        r"\hline",
+    ]
+    for source in discovered:
+        year = source.year if source.year is not None else "unknown"
+        provider_query = f"{source.provider}/{source.query_id}"
+        lines.append(
+            f"{_soft_break(source.source_id)} & "
+            f"{year} & "
+            f"{_soft_break(provider_query)} & "
+            f"{_soft_break(', '.join(source.intended_channel_hints))} \\\\"
         )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)

@@ -26,11 +26,14 @@ Generated Markdown reports:
 - `theorem_backed_family_summary.md`
 - `pilot_sources_summary.md`
 - `pilot_source_channel_intents.md`
+- `literature_discovery_report.md`
+- `discovered_source_channel_hints.md`
 
 LaTeX table fragments are in `reports/latex/`.
 Canonical literature LaTeX output: `reports/latex/canonical_literature_table.tex`.
 Analytics LaTeX outputs include `reports/latex/family_legitimacy_summary.tex`, `reports/latex/family_year_summary.tex`, and `reports/latex/theorem_backed_family_summary.tex`.
 Pilot source LaTeX output: `reports/latex/pilot_sources_summary.tex`.
+Discovery LaTeX output: `reports/latex/literature_discovery_report.tex`.
 
 Analytics figures:
 

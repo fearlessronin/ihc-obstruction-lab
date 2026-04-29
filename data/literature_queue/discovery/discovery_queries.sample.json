@@ -1,0 +1,122 @@
+[
+  {
+    "query_id": "ihc_counterexample_general",
+    "query_text": "integral Hodge conjecture counterexample",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "classical_obstruction",
+    "intended_channel_hints": ["torsion_cohomology_operation", "divisibility"],
+    "intended_bottleneck_hints": ["verify_theorem_statement"],
+    "notes": "General discovery query for classical obstruction mechanisms."
+  },
+  {
+    "query_id": "ihc_unramified_cohomology",
+    "query_text": "integral Hodge conjecture unramified cohomology",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "unramified_brauer",
+    "intended_channel_hints": ["brauer_unramified"],
+    "intended_bottleneck_hints": ["verify_theorem_statement", "unramified_nonvanishing"],
+    "notes": "Discovery query for unramified cohomology mechanism anchors."
+  },
+  {
+    "query_id": "ihc_brauer",
+    "query_text": "integral Hodge conjecture Brauer",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "unramified_brauer",
+    "intended_channel_hints": ["brauer_unramified"],
+    "intended_bottleneck_hints": ["brauer_nonzero"],
+    "notes": "Discovery query for Brauer comparison sources."
+  },
+  {
+    "query_id": "ihc_enriques",
+    "query_text": "integral Hodge conjecture Enriques",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "enriques_coble_bockstein",
+    "intended_channel_hints": ["enriques_product", "cup_product_bockstein"],
+    "intended_bottleneck_hints": ["survival_proved_in_source"],
+    "notes": "Discovery query for Enriques-product Bockstein mechanisms."
+  },
+  {
+    "query_id": "ihc_chow_trivial",
+    "query_text": "integral Hodge conjecture Chow-trivial",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "positive_boundary",
+    "intended_channel_hints": ["boundary_behavior"],
+    "intended_bottleneck_hints": ["none"],
+    "notes": "Discovery query for positive or boundary comparison sources."
+  },
+  {
+    "query_id": "ihc_fermat",
+    "query_text": "integral Hodge conjecture Fermat",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "computational_lattice",
+    "intended_channel_hints": ["lattice_saturation", "computed_lattice_benchmark"],
+    "intended_bottleneck_hints": ["lattice_identification"],
+    "notes": "Discovery query for computational lattice benchmark sources."
+  },
+  {
+    "query_id": "ihc_abelian_varieties",
+    "query_text": "integral Hodge conjecture abelian varieties",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "abelian_matroidal",
+    "intended_channel_hints": ["abelian_variety_channel"],
+    "intended_bottleneck_hints": ["verify_theorem_statement"],
+    "notes": "Discovery query for abelian-variety channel sources."
+  },
+  {
+    "query_id": "ihc_matroid",
+    "query_text": "integral Hodge conjecture matroid",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "abelian_matroidal",
+    "intended_channel_hints": ["matroidal_parity", "abelian_variety_channel"],
+    "intended_bottleneck_hints": ["none"],
+    "notes": "Discovery query for matroidal/parity sources."
+  },
+  {
+    "query_id": "ihc_stack_quotient_stabilizer",
+    "query_text": "integral Hodge conjecture stack quotient stabilizer",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "stacky_finite_group",
+    "intended_channel_hints": ["stacky_stabilizer", "motivic_realization"],
+    "intended_bottleneck_hints": ["stacky_realization", "coarse_comparison"],
+    "notes": "Discovery query for future stacky/equivariant channel sources."
+  },
+  {
+    "query_id": "ihc_divisibility",
+    "query_text": "integral Hodge conjecture divisibility",
+    "provider": "mock",
+    "year_from": null,
+    "year_to": null,
+    "max_results": 10,
+    "pilot_group": "classical_obstruction",
+    "intended_channel_hints": ["divisibility"],
+    "intended_bottleneck_hints": ["none"],
+    "notes": "Discovery query for divisibility mechanism sources."
+  }
+]

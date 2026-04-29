@@ -126,3 +126,27 @@ python -m ihc_lab.cli pilot-sources-report --merge-into-queue
 ```
 
 Merged sources are written to `data/literature_queue/raw_sources.pilot.json`. The command does not modify `data/seed_rows.json`.
+
+## Literature Discovery / Source Polling
+
+Discovery queries live in `data/literature_queue/discovery/`. They find source metadata only; they do not extract theorem claims, create theorem-backed rows, or modify `data/seed_rows.json`.
+
+Mock discovery is offline and is the default testing path:
+
+```powershell
+python -m ihc_lab.cli discover-literature --provider mock
+```
+
+Manual discovery exports can be normalized locally:
+
+```powershell
+python -m ihc_lab.cli import-discovered-sources --input data/literature_queue/discovery/discovered_sources.manual.sample.json
+```
+
+Optional OpenAlex, Crossref, and arXiv discovery providers require an explicit network flag:
+
+```powershell
+python -m ihc_lab.cli discover-literature --provider openalex --allow-network
+```
+
+Discovered rows are metadata-only, unreviewed, and not theorem-backed. Use `--merge-into-queue` only to write a separate `raw_sources.discovered.json` queue source file.

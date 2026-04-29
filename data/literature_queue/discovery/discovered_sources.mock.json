@@ -1,0 +1,139 @@
+[
+  {
+    "discovery_id": "mock_ihc_counterexample_general_mock_integral_hodge_conjecture_counterexample",
+    "source_id": "mock_integral_hodge_conjecture_counterexample",
+    "title": "Mock source for integral Hodge conjecture counterexample",
+    "authors": [
+      "Unknown"
+    ],
+    "year": null,
+    "venue": null,
+    "doi": null,
+    "arxiv_id": null,
+    "url": null,
+    "abstract": null,
+    "provider": "mock",
+    "query_id": "ihc_counterexample_general",
+    "query_text": "integral Hodge conjecture counterexample",
+    "score": 1.0,
+    "bibtex_key_candidate": null,
+    "intended_channel_hints": [
+      "torsion_cohomology_operation",
+      "divisibility"
+    ],
+    "intended_bottleneck_hints": [
+      "verify_theorem_statement"
+    ],
+    "discovery_status": "discovered_unreviewed",
+    "notes": "Mock/offline discovery result for tests and CI."
+  },
+  {
+    "discovery_id": "mock_ihc_enriques_mock_integral_hodge_conjecture_enriques",
+    "source_id": "mock_integral_hodge_conjecture_enriques",
+    "title": "Mock source for integral Hodge conjecture Enriques",
+    "authors": [
+      "Unknown"
+    ],
+    "year": null,
+    "venue": null,
+    "doi": null,
+    "arxiv_id": null,
+    "url": null,
+    "abstract": null,
+    "provider": "mock",
+    "query_id": "ihc_enriques",
+    "query_text": "integral Hodge conjecture Enriques",
+    "score": 1.0,
+    "bibtex_key_candidate": null,
+    "intended_channel_hints": [
+      "enriques_product",
+      "cup_product_bockstein"
+    ],
+    "intended_bottleneck_hints": [
+      "survival_proved_in_source"
+    ],
+    "discovery_status": "discovered_unreviewed",
+    "notes": "Mock/offline discovery result for tests and CI."
+  },
+  {
+    "discovery_id": "mock_ihc_chow_trivial_mock_integral_hodge_conjecture_chow_trivial",
+    "source_id": "mock_integral_hodge_conjecture_chow_trivial",
+    "title": "Mock source for integral Hodge conjecture Chow-trivial",
+    "authors": [
+      "Unknown"
+    ],
+    "year": null,
+    "venue": null,
+    "doi": null,
+    "arxiv_id": null,
+    "url": null,
+    "abstract": null,
+    "provider": "mock",
+    "query_id": "ihc_chow_trivial",
+    "query_text": "integral Hodge conjecture Chow-trivial",
+    "score": 1.0,
+    "bibtex_key_candidate": null,
+    "intended_channel_hints": [
+      "boundary_behavior"
+    ],
+    "intended_bottleneck_hints": [
+      "none"
+    ],
+    "discovery_status": "discovered_unreviewed",
+    "notes": "Mock/offline discovery result for tests and CI."
+  },
+  {
+    "discovery_id": "mock_ihc_abelian_varieties_mock_integral_hodge_conjecture_abelian_varieties",
+    "source_id": "mock_integral_hodge_conjecture_abelian_varieties",
+    "title": "Mock source for integral Hodge conjecture abelian varieties",
+    "authors": [
+      "Unknown"
+    ],
+    "year": null,
+    "venue": null,
+    "doi": null,
+    "arxiv_id": null,
+    "url": null,
+    "abstract": null,
+    "provider": "mock",
+    "query_id": "ihc_abelian_varieties",
+    "query_text": "integral Hodge conjecture abelian varieties",
+    "score": 1.0,
+    "bibtex_key_candidate": null,
+    "intended_channel_hints": [
+      "abelian_variety_channel"
+    ],
+    "intended_bottleneck_hints": [
+      "verify_theorem_statement"
+    ],
+    "discovery_status": "discovered_unreviewed",
+    "notes": "Mock/offline discovery result for tests and CI."
+  },
+  {
+    "discovery_id": "mock_ihc_divisibility_mock_integral_hodge_conjecture_divisibility",
+    "source_id": "mock_integral_hodge_conjecture_divisibility",
+    "title": "Mock source for integral Hodge conjecture divisibility",
+    "authors": [
+      "Unknown"
+    ],
+    "year": null,
+    "venue": null,
+    "doi": null,
+    "arxiv_id": null,
+    "url": null,
+    "abstract": null,
+    "provider": "mock",
+    "query_id": "ihc_divisibility",
+    "query_text": "integral Hodge conjecture divisibility",
+    "score": 1.0,
+    "bibtex_key_candidate": null,
+    "intended_channel_hints": [
+      "divisibility"
+    ],
+    "intended_bottleneck_hints": [
+      "none"
+    ],
+    "discovery_status": "discovered_unreviewed",
+    "notes": "Mock/offline discovery result for tests and CI."
+  }
+]
