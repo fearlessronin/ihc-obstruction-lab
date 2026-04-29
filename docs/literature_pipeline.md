@@ -104,3 +104,23 @@ Canonical literature rows are not merged into seed rows automatically. Rows mark
 ```powershell
 python -m ihc_lab.cli canonical-literature-report
 ```
+
+## Pilot Source Import
+
+Pilot source files live under `data/literature_queue/pilot_sources/`. They are curated metadata for atlas expansion, not theorem-backed rows and not a complete bibliography.
+
+Channel hints and bottleneck hints are triage hints. They are not verified labels.
+
+The pilot import workflow makes no web, API, or LLM calls:
+
+```powershell
+python -m ihc_lab.cli pilot-sources-report
+```
+
+To merge pilot source metadata into a separate local queue:
+
+```powershell
+python -m ihc_lab.cli pilot-sources-report --merge-into-queue
+```
+
+Merged sources are written to `data/literature_queue/raw_sources.pilot.json`. The command does not modify `data/seed_rows.json`.

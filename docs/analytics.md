@@ -31,6 +31,8 @@ Both views are atlas-derived and incomplete with respect to the full literature.
 
 This report avoids double-counting multi-channel mechanisms and is atlas-derived, not complete with respect to the full literature.
 
+Pilot source reports can help identify which channel families need more extraction or review coverage before the analytics overlay is expanded.
+
 ## Strict vs Extended Counts
 
 Strict mode includes only theorem-backed obstruction rows.

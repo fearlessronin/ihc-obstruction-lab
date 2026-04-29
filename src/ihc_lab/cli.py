@@ -40,6 +40,10 @@ from ihc_lab.literature.llm_client import create_llm_client
 from ihc_lab.literature.llm_config import LLMConfig, load_llm_config
 from ihc_lab.literature.manual_import import import_manual_extraction
 from ihc_lab.literature.packet_builder import build_packets, load_packets_json, save_packets_json
+from ihc_lab.literature.pilot_sources import (
+    load_pilot_sources_csv,
+    load_pilot_sources_json,
+)
 from ihc_lab.literature.promotion import (
     export_promoted_candidates,
     promote_reviewed_candidates,
@@ -53,11 +57,18 @@ from ihc_lab.literature.reports import (
     literature_packets_markdown,
     literature_queue_latex,
     literature_queue_markdown,
+    pilot_source_channel_intents_markdown,
+    pilot_sources_summary_latex,
+    pilot_sources_summary_markdown,
     promoted_candidates_markdown,
     review_status_report_markdown,
 )
 from ihc_lab.literature.review_queue import load_review_queue
-from ihc_lab.literature.sources import load_literature_sources
+from ihc_lab.literature.source_import import (
+    convert_pilot_sources_to_literature_sources,
+    merge_sources,
+)
+from ihc_lab.literature.sources import load_literature_sources, save_literature_sources
 from ihc_lab.ranking import rank_candidates
 from ihc_lab.reports import (
     association_rules_latex,
@@ -318,6 +329,43 @@ def export_reviewed_literature(
     return [Path(output_path), report]
 
 
+def generate_pilot_sources_report(
+    input_path: str | Path,
+    csv_path: str | Path | None,
+    merge_into_queue: bool,
+    queue_output: str | Path,
+    report_path: str | Path,
+    channel_report_path: str | Path,
+    latex_path: str | Path,
+) -> list[Path]:
+    sources = (
+        load_pilot_sources_csv(csv_path)
+        if csv_path is not None
+        else load_pilot_sources_json(input_path)
+    )
+    report = Path(report_path)
+    channel_report = Path(channel_report_path)
+    latex = Path(latex_path)
+    report.parent.mkdir(parents=True, exist_ok=True)
+    channel_report.parent.mkdir(parents=True, exist_ok=True)
+    latex.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(pilot_sources_summary_markdown(sources) + "\n", encoding="utf-8")
+    channel_report.write_text(
+        pilot_source_channel_intents_markdown(sources) + "\n",
+        encoding="utf-8",
+    )
+    latex.write_text(pilot_sources_summary_latex(sources) + "\n", encoding="utf-8")
+    outputs = [report, channel_report, latex]
+
+    if merge_into_queue:
+        queue_path = Path("data/literature_queue/raw_sources.sample.json")
+        existing = load_literature_sources(queue_path) if queue_path.exists() else []
+        merged = merge_sources(existing, convert_pilot_sources_to_literature_sources(sources))
+        save_literature_sources(merged, queue_output)
+        outputs.append(Path(queue_output))
+    return outputs
+
+
 def generate_analytics_report(
     count_mode: str = "family",
     strict: bool = False,
@@ -466,6 +514,18 @@ def build_parser() -> argparse.ArgumentParser:
     analytics.add_argument("--no-figures", dest="figures", action="store_false")
     analytics.add_argument("--output-dir", default="reports")
 
+    pilot = subparsers.add_parser("pilot-sources-report")
+    pilot.add_argument(
+        "--input",
+        default="data/literature_queue/pilot_sources/pilot_sources.sample.json",
+    )
+    pilot.add_argument("--csv")
+    pilot.add_argument("--merge-into-queue", action="store_true")
+    pilot.add_argument("--queue-output", default="data/literature_queue/raw_sources.pilot.json")
+    pilot.add_argument("--report", default="reports/pilot_sources_summary.md")
+    pilot.add_argument("--channel-report", default="reports/pilot_source_channel_intents.md")
+    pilot.add_argument("--latex", default="reports/latex/pilot_sources_summary.tex")
+
     return parser
 
 
@@ -547,6 +607,19 @@ def main(argv: list[str] | None = None) -> int:
             metadata_path=args.metadata,
             figures=args.figures,
             output_dir=args.output_dir,
+        )
+        for path in paths:
+            print(path)
+        return 0
+    if args.command == "pilot-sources-report":
+        paths = generate_pilot_sources_report(
+            args.input,
+            args.csv,
+            args.merge_into_queue,
+            args.queue_output,
+            args.report,
+            args.channel_report,
+            args.latex,
         )
         for path in paths:
             print(path)

@@ -8,6 +8,7 @@ from ihc_lab.channels import ObstructionChannel
 from ihc_lab.literature.extraction_schema import ExtractionStatus
 from ihc_lab.literature.extraction_schema import ExtractedChannelCandidate
 from ihc_lab.literature.packet_builder import ExtractionPacket
+from ihc_lab.literature.pilot_sources import PilotLiteratureSource
 from ihc_lab.literature.review_queue import ReviewQueue
 
 
@@ -234,6 +235,88 @@ def promoted_candidates_latex(records: list[ObstructionChannel]) -> str:
             f"{_soft_break(', '.join(label.value for label in record.channel_labels))} & "
             f"{_soft_break(record.trust_level.value)} & "
             f"{_soft_break(record.bottleneck.value)} \\\\"
+        )
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
+    return "\n".join(lines)
+
+
+def pilot_sources_summary_markdown(sources: list[PilotLiteratureSource]) -> str:
+    group_counts = Counter(source.pilot_group for source in sources)
+    priority_counts = Counter(source.priority for source in sources)
+    lines = [
+        "# Pilot Literature Sources",
+        "",
+        "Warning: This is a curated pilot source list for atlas expansion, not a complete bibliography.",
+        "",
+        f"Total pilot sources: {len(sources)}",
+        "",
+        "## Counts by Pilot Group",
+    ]
+    for group, count in sorted(group_counts.items()):
+        lines.append(f"- `{group}`: {count}")
+    lines.extend(["", "## Counts by Priority"])
+    for priority, count in sorted(priority_counts.items()):
+        lines.append(f"- `{priority}`: {count}")
+    lines.extend(
+        [
+            "",
+            "| source_id | year | pilot group | intended channels | priority | bibtex key |",
+            "| --- | ---: | --- | --- | ---: | --- |",
+        ]
+    )
+    for source in sources:
+        year = source.year if source.year is not None else "unknown"
+        lines.append(
+            "| "
+            f"{source.source_id} | "
+            f"{year} | "
+            f"{source.pilot_group} | "
+            f"{', '.join(source.intended_channel_hints)} | "
+            f"{source.priority} | "
+            f"{source.bibtex_key or ''} |"
+        )
+    return "\n".join(lines)
+
+
+def pilot_source_channel_intents_markdown(sources: list[PilotLiteratureSource]) -> str:
+    by_channel: dict[str, list[str]] = {}
+    for source in sources:
+        for channel in source.intended_channel_hints:
+            by_channel.setdefault(channel, []).append(source.source_id)
+    lines = [
+        "# Pilot Source Channel Intents",
+        "",
+        "Warning: Channel intents are triage hints, not verified labels.",
+        "",
+        "| channel hint | source count | source ids |",
+        "| --- | ---: | --- |",
+    ]
+    for channel, source_ids in sorted(by_channel.items()):
+        lines.append(f"| {channel} | {len(source_ids)} | {', '.join(sorted(source_ids))} |")
+    return "\n".join(lines)
+
+
+def pilot_sources_summary_latex(sources: list[PilotLiteratureSource]) -> str:
+    lines = [
+        r"\begin{table}[h]",
+        r"\centering",
+        r"\caption{Pilot literature sources for atlas expansion.}",
+        r"\label{tab:pilot-literature-sources}",
+        r"\footnotesize",
+        r"\renewcommand{\arraystretch}{1.18}",
+        r"\begin{tabular}{|p{0.24\textwidth}|p{0.10\textwidth}|p{0.20\textwidth}|p{0.28\textwidth}|p{0.08\textwidth}|}",
+        r"\hline",
+        r"\centering\textbf{Source} & \centering\textbf{Year} & \centering\textbf{Group} & \centering\textbf{Channel hints} & \centering\arraybackslash\textbf{Priority} \\",
+        r"\hline",
+    ]
+    for source in sources:
+        year = source.year if source.year is not None else "unknown"
+        lines.append(
+            f"{_soft_break(source.source_id)} & "
+            f"{year} & "
+            f"{_soft_break(source.pilot_group)} & "
+            f"{_soft_break(', '.join(source.intended_channel_hints))} & "
+            f"{source.priority} \\\\"
         )
     lines.extend([r"\hline", r"\end{tabular}", r"\end{table}"])
     return "\n".join(lines)

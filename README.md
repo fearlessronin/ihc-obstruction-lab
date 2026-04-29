@@ -137,6 +137,12 @@ Keyword hints in packets are not verified labels.
 
 See `docs/literature_pipeline.md` for the queue workflow and promotion rules.
 
+Pilot source metadata for atlas expansion can be summarized with:
+
+```powershell
+python -m ihc_lab.cli pilot-sources-report
+```
+
 ## Configurable LLM Extraction
 
 Phase 6C adds mock, manual, OpenAI-compatible, and Anthropic provider interfaces for local extraction packets. Mock mode is offline and is the default testing path:
