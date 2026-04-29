@@ -9,6 +9,8 @@ Supported providers:
 - `openai-compatible`: optional provider adapter using `OPENAI_API_KEY`.
 - `anthropic`: optional provider adapter using `ANTHROPIC_API_KEY`.
 
+Users must supply their own `ANTHROPIC_API_KEY`; no shared or repository key is provided.
+
 ## Configuration
 
 Copy the example file and keep local secrets untracked:
