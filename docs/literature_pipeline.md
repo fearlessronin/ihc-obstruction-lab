@@ -51,3 +51,21 @@ This writes:
 
 - `data/literature_queue/packets.sample.json`
 - `reports/literature_packets.md`
+
+## Phase 6C: Configurable LLM Extraction
+
+Phase 6C adds a provider-agnostic extraction interface for local packets. The default provider is `mock`, which runs offline and is used by tests and CI.
+
+```powershell
+python -m ihc_lab.cli run-llm-extraction --provider mock
+```
+
+Manual JSON import works without API keys:
+
+```powershell
+python -m ihc_lab.cli import-manual-extraction --input data/literature_queue/manual_extraction.sample.json
+```
+
+Optional provider adapters are available for `anthropic` and `openai-compatible`, but external calls require `--allow-provider-call`. All LLM/manual outputs are force-reset to `llm_extracted_unverified` and `needs_human_review`.
+
+See `docs/llm_configuration.md` for config files, environment variables, and provider safety notes.

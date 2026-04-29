@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ihc_lab.channels import ObstructionChannel
-from ihc_lab.enums import BottleneckLabel, ChannelLabel, ComputabilityLevel, ObstructionStatus
+from ihc_lab.enums import BottleneckLabel, ChannelLabel, ComputabilityLevel
 
 
 @dataclass(frozen=True)

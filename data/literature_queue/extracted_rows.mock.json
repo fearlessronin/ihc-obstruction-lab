@@ -1,0 +1,70 @@
+[
+  {
+    "extraction_id": "mock_unramified_channel",
+    "source_id": "colliot_theleme_voisin_2012_unramified",
+    "proposed_record_id": "mock_unramified_degree_four_channel",
+    "proposed_display_name": "Mock unramified channel extraction",
+    "proposed_channel_labels": [
+      "brauer_unramified"
+    ],
+    "proposed_source_packages": [
+      "unramified_cohomology_class"
+    ],
+    "proposed_active_operations": [
+      "residue_test",
+      "unramified_survival"
+    ],
+    "proposed_survival_status": "unknown",
+    "proposed_obstruction_status": "unknown",
+    "proposed_computability_level": "level_3_theorem_import",
+    "proposed_bottleneck": "verify_theorem_statement",
+    "proposed_citation_keys": [
+      "ColliotTheleneVoisin2012"
+    ],
+    "evidence_snippets": [
+      "Mock sample mentions unramified and Brauer."
+    ],
+    "missing_fields": [
+      "full_theorem_statement"
+    ],
+    "extraction_notes": "Offline mock extraction; not theorem verification.",
+    "trust_level": "llm_extracted_unverified",
+    "review_status": "needs_human_review",
+    "reviewer_notes": null
+  },
+  {
+    "extraction_id": "mock_lattice_saturation",
+    "source_id": "aljovin_movasati_villaflor_2019_fermat",
+    "proposed_record_id": "mock_fermat_lattice_saturation",
+    "proposed_display_name": "Mock Fermat lattice-saturation extraction",
+    "proposed_channel_labels": [
+      "lattice_saturation",
+      "computed_lattice_benchmark"
+    ],
+    "proposed_source_packages": [
+      "linear_algebraic_cycle_lattice",
+      "hodge_cycle_lattice"
+    ],
+    "proposed_active_operations": [
+      "smith_normal_form",
+      "elementary_divisor_comparison"
+    ],
+    "proposed_survival_status": "unknown",
+    "proposed_obstruction_status": "unknown",
+    "proposed_computability_level": "level_2_computed_group",
+    "proposed_bottleneck": "lattice_identification",
+    "proposed_citation_keys": [
+      "AljovinMovasatiVillaflor2019"
+    ],
+    "evidence_snippets": [
+      "Mock sample mentions Fermat lattice computation."
+    ],
+    "missing_fields": [
+      "full_computation_details"
+    ],
+    "extraction_notes": "Offline mock extraction; not theorem verification.",
+    "trust_level": "llm_extracted_unverified",
+    "review_status": "needs_human_review",
+    "reviewer_notes": null
+  }
+]

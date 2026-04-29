@@ -11,7 +11,6 @@ from ihc_lab.association_rules import (
     transactions_from_feature_matrix,
 )
 from ihc_lab.channels import ObstructionChannel
-from ihc_lab.enums import ChannelLabel
 from ihc_lab.features import extract_feature_matrix
 from ihc_lab.ranking import CandidateScore
 from ihc_lab.rule_classifier import classify_records

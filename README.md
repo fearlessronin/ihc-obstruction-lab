@@ -137,6 +137,19 @@ Keyword hints in packets are not verified labels.
 
 See `docs/literature_pipeline.md` for the queue workflow and promotion rules.
 
+## Configurable LLM Extraction
+
+Phase 6C adds mock, manual, OpenAI-compatible, and Anthropic provider interfaces for local extraction packets. Mock mode is offline and is the default testing path:
+
+```powershell
+python -m ihc_lab.cli run-llm-extraction --provider mock
+python -m ihc_lab.cli import-manual-extraction --input data/literature_queue/manual_extraction.sample.json
+```
+
+Provider mode is optional, uses user-owned API keys, and requires `--allow-provider-call`. All LLM/manual outputs remain unverified and queued for human review.
+
+See `docs/llm_configuration.md` for configuration details.
+
 ## Local/Remote Sync
 
 This repository is intended to be developed locally and kept in sync with GitHub:

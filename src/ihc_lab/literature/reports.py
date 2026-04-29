@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import Counter
 
 from ihc_lab.literature.extraction_schema import ExtractionStatus
+from ihc_lab.literature.extraction_schema import ExtractedChannelCandidate
 from ihc_lab.literature.packet_builder import ExtractionPacket
 from ihc_lab.literature.review_queue import ReviewQueue
 
@@ -103,5 +104,38 @@ def literature_packets_markdown(packets: list[ExtractionPacket]) -> str:
             f"{', '.join(packet.operation_hints)} | "
             f"{', '.join(packet.bottleneck_hints)} | "
             f"{', '.join(packet.matched_keywords)} |"
+        )
+    return "\n".join(lines)
+
+
+def llm_extraction_report_markdown(candidates: list[ExtractedChannelCandidate]) -> str:
+    needs_review = [
+        candidate
+        for candidate in candidates
+        if candidate.review_status == ExtractionStatus.needs_human_review
+    ]
+    unique_sources = {candidate.source_id for candidate in candidates}
+    lines = [
+        "# LLM Extraction Report",
+        "",
+        "Warning: All rows are unverified and require human review.",
+        "",
+        f"Extracted rows: {len(candidates)}",
+        f"Needs review: {len(needs_review)}",
+        f"Unique sources: {len(unique_sources)}",
+        "",
+        "| extraction_id | source_id | proposed channels | bottleneck | trust | review status | missing fields |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for candidate in candidates:
+        lines.append(
+            "| "
+            f"{candidate.extraction_id} | "
+            f"{candidate.source_id} | "
+            f"{', '.join(candidate.proposed_channel_labels)} | "
+            f"{candidate.proposed_bottleneck} | "
+            f"{candidate.trust_level} | "
+            f"{candidate.review_status} | "
+            f"{', '.join(candidate.missing_fields)} |"
         )
     return "\n".join(lines)

@@ -1,0 +1,35 @@
+[
+  {
+    "extraction_id": "manual_sample_unramified",
+    "source_id": "colliot_theleme_voisin_2012_unramified",
+    "proposed_record_id": "manual_sample_unramified_channel",
+    "proposed_display_name": "Manual sample unramified channel extraction",
+    "proposed_channel_labels": [
+      "brauer_unramified"
+    ],
+    "proposed_source_packages": [
+      "unramified_cohomology_class"
+    ],
+    "proposed_active_operations": [
+      "residue_test",
+      "unramified_survival"
+    ],
+    "proposed_survival_status": "unknown",
+    "proposed_obstruction_status": "unknown",
+    "proposed_computability_level": "level_3_theorem_import",
+    "proposed_bottleneck": "verify_theorem_statement",
+    "proposed_citation_keys": [
+      "ColliotTheleneVoisin2012"
+    ],
+    "evidence_snippets": [
+      "Sample manually supplied snippet; not theorem verification."
+    ],
+    "missing_fields": [
+      "full_theorem_statement"
+    ],
+    "extraction_notes": "Sample manual import row. Model-supplied trust/review status was reset to unverified/needs_human_review.",
+    "trust_level": "llm_extracted_unverified",
+    "review_status": "needs_human_review",
+    "reviewer_notes": null
+  }
+]

@@ -1,0 +1,15 @@
+# Copy this file to config/llm.local.toml.
+# Do not commit llm.local.toml or API keys.
+
+provider = "anthropic"
+model = "claude-sonnet-4-5"
+api_key_env = "ANTHROPIC_API_KEY"
+base_url = ""
+timeout_seconds = 60
+max_retries = 2
+max_tokens = 4096
+temperature = 0
+
+[extraction]
+force_trust_level = "llm_extracted_unverified"
+force_review_status = "needs_human_review"
